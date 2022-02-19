@@ -1,0 +1,25 @@
+---
+author: "Eli Holmes"
+date: "`r Sys.Date()`"
+title: "Targets + Bookdown"
+output:
+  bookdown::gitbook: default
+documentclass: book
+---
+
+# Preface
+
+This is an attempt to use {targets} with {bookdown} to track the status of chapter and not re-run chapters each time the book needs to be rebuilt.
+
+## To run the book
+
+* Install the {targets} package and {bookdown}
+* Type `tar_make()` at the command line.
+* Look in the `_book` folder for the `index.html` file and open that.
+
+## To add chapters
+
+* The chapters are in the `chapters` folder. Add an Rmd there.
+* Open the `_targets.R` file and add something like target_factory(chap2)` but replace `chap2` with your file name.
+* `chapters/chap3` shows and example where the chapter uses targets markdown to create a chapter specific pipeline. To run, set `chapters/chap3` as the working directory, open `chap3.Rmd` and knit. Then 
+
