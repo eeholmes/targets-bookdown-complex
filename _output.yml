@@ -1,0 +1,20 @@
+bookdown::gitbook:
+  css: style.css
+  split_by: section
+  split_bib: FALSE
+  config:
+    toc: 
+      collapse: section
+      before: |
+        <li><a href="./">Multivarite Autoregressive Modeling</a></li>
+      after: |
+        <li style="font-weight: normal"><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+    download: [pdf]
+    edit: https://github.com/atsa-es/MARMES/blob/master/%s
+bookdown::pdf_book:
+  includes:
+    in_header: tex/preamble.tex
+  latex_engine: xelatex
+  citation_package: natbib
+  toc_depth: 2
+  toc_unnumbered: no

@@ -1,19 +1,11 @@
-#' @title Plot ozone from the preprocessed air quality data.
-#' @description Plot a histogram of ozone concentration.
-#' @return A ggplot histogram showing ozone content.
-#' @param data Data frame, preprocessed air quality dataset.
-#' @examples
-#' library(ggplot2)
-#' library(tidyverse)
-#' data <- airquality %>%
-#'   mutate(Ozone = replace_na(Ozone, mean(Ozone, na.rm = TRUE)))
-#' create_plot(data)
-create_plot <- function(data) {
-  ggplot(data) +
-    geom_histogram(aes(x = Ozone), bins = 12) +
-    theme_gray(24)
+# Create the references bib file combining the 3 bib files
+create_refs <- function(...){
+  if(file.exists(file.path("tex", "bookrefs.bib")))
+     file.remove(file.path("tex", "bookrefs.bib"))
+  file.create(file.path("tex", "bookrefs.bib"))
+  file.append(file.path("tex", "bookrefs.bib"), ...)
+  return(file.path("tex", "bookrefs.bib"))
 }
-
 
 # Change extension from md to Rmd
 #  since (at the moment) bookdown ignores md files unless explicitly stated in
@@ -25,8 +17,16 @@ change_ext <- function(file, inext, outext) {
   newfile
 }
 
+# Render the raw Rmd
+clean_render <- function(dir, file, texfile="tex/defs.tex"){
+  clean_file(dir, file, texfile=texfile)
+  infile <- file.path("cleanedRmd", paste0(dir,".Rmd"))
+  outfile <- paste0(dir, ".Rmd")
+  rmarkdown::render(infile, output_file = outfile, output_dir = 'rendered-chapters')
+}
+
 
 # Bookdown render
 render_with_deps <- function(index, ...) {
-  bookdown::render_book(index)
+  bookdown::render_book(index, output_format = "all")
 }

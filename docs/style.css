@@ -1,0 +1,125 @@
+p.caption {
+  color: #777;
+  margin-top: 10px;
+}
+
+/* This is to change the code to not be shaded.  Not all req. */
+/* I kept adding css until all the code was unshaded. */
+/* Why not just apply to all code? because I wanted the output to be shaded */
+
+p code { /* this fixes <code> in <p> elements */
+  white-space: inherit;
+  background-color: white !important;
+}
+h1 code { /* this fixes <code> in headers */
+  white-space: inherit;
+  background-color: white !important;
+}
+h2 code { /* this fixes <code> in headers */
+  white-space: inherit;
+  background-color: white !important;
+}
+h3 code { /* this fixes <code> in headers */
+  white-space: inherit;
+  background-color: white !important;
+}
+h4 code { /* this fixes <code> in headers */
+  white-space: inherit;
+  background-color: white !important;
+}
+pre {
+  word-break: normal;
+  word-wrap: normal;
+}
+.sourceCode { /* this fixes code blocks */
+  word-break: normal;
+  word-wrap: normal;
+  background-color: white !important;
+}.sourceCode pre { /* this fixes code blocks */
+  word-break: normal;
+  word-wrap: normal;
+  background-color: white !important;
+}
+.sourceCode pre code { /* this fixes lines within code blocks */
+  white-space: inherit;
+  background-color: white !important;
+}
+.section .sourceCode code { /* seems to fix some more cases */
+  white-space: inherit;
+  background-color: white !important;
+}
+.section .sourceCode pre { /* seems to fix some more cases */
+  white-space: inherit;
+  background-color: white !important;
+}
+.section li code { /* fixes code in lists */
+  white-space: inherit;
+  background-color: white !important;
+}
+.section li pre { /* fixes code in lists */
+  white-space: inherit;
+  background-color: white !important;
+}
+
+/* This is to change the font.  All these aren't req probably. */
+/* The .section one is important. */
+
+body p {
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif !important;
+}
+
+.section {
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif !important;
+}
+
+.book-summary {
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif !important;
+    font-weight: bold;
+}
+
+h1, h2, h3, h4 {
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif !important;
+}
+
+
+div.book-summary 
+{
+  background-color: #ccccff !important;
+}
+
+
+/* the following is to try to fix problems with lists embedded in lists */
+/* the :not(.chapter) is to not have this apply to the toc on left */
+.book-body ul {
+    padding: 0;
+    margin: 20px !important;
+}
+
+.book-body ul li {
+    margin-top: 0em;
+    margin-bottom: 0em;
+}
+
+.book-body ul li p {
+    margin-bottom: 0px !important;
+    margin-top: 0px !important;
+}
+
+/* This is some futzing with the title page and author list */
+
+.book .book-header h1 {
+  opacity: 1;
+  text-align: left;
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif !important;
+}
+
+#header .title {
+  margin-bottom: 0em;
+}
+#header h4.author {
+  margin: 0;
+  color: #666;
+}
+#header h4.author em {
+  font-style: normal;
+}

@@ -1,25 +1,64 @@
----
-author: "Eli Holmes"
+--- 
+title: "Multivariate Autoregressive Modeling for the Environmental Sciences"
+author: "E. E. Holmes, M. D. Scheuerell, and E. J. Ward"
 date: "`r Sys.Date()`"
-title: "Targets + Bookdown"
+fontsize: 12pt
+documentclass: book
+bibliography: [tex/Fish507.bib, tex/book.bib, tex/packages.bib]
+biblio-style: apalike
+link-citations: yes
+description: "Multivariate autoregressive modeling for the environmental sciences. This book covers univariate and multivatiate autoregressive state-space modeling, also known as vector autoregressive modeling, with example applications drawn from the ecological, fisheries, and environmental literature."
+cover-image: images/cover.png
+favicon: "favicon.ico"
 output:
   bookdown::gitbook: default
-documentclass: book
 ---
 
-# Preface
+<!--
+site: bookdown::bookdown_site
+-->
 
-This is an attempt to use {targets} with {bookdown} to track the status of chapter and not re-run chapters each time the book needs to be rebuilt.
+# Preface {-}
 
-## To run the book
+```{r RUNFIRST, echo=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment=NA, cache=TRUE, tidy.opts=list(width.cutoff=60), tidy=TRUE, fig.align='center', out.width='80%')
+```
 
-* Install the {targets} package and {bookdown}
-* Type `tar_make()` at the command line.
-* Look in the `_book` folder for the `index.html` file and open that.
+This is material that was developed as part of a course we teach at the University of Washington on applied time series analysis for fisheries and environmental data.  You can find our lectures on our course website [ATSA](https://nwfsc-timeseries.github.io/atsa/).
 
-## To add chapters
+### Book package {-}
 
-* The chapters are in the `chapters` folder. Add an Rmd there.
-* Open the `_targets.R` file and add something like target_factory(chap2)` but replace `chap2` with your file name.
-* `chapters/chap3` shows and example where the chapter uses targets markdown to create a chapter specific pipeline. To run, set `chapters/chap3` as the working directory, open `chap3.Rmd` and knit. Then 
+The book uses a number of R packages and a variety of fisheries data sets.  The packages and data sets can be installed by installing our  **atsalibrary** package which is hosted on GitHub:
+
+```{r preface-load-atsa, eval=FALSE}
+library(devtools)
+devtools::install_github("nwfsc-timeseries/atsalibrary")
+```
+
+### Authors {-}
+
+The authors are United States federal research scientists.  This work was conducted as part of our jobs at the  Northwest Fisheries Science Center (NWFSC), a research center for NOAA Fisheries, and the United States Geological Survey, which are United States federal government agencies. E. Holmes and E. Ward are affiliate faculty and M. Scheuerell is an associate professor at the University of Washington.
+
+Links to more code and publications can be found on our academic websites:
+
+* http://faculty.washington.edu/eeholmes
+* http://faculty.washington.edu/scheuerl
+* http://faculty.washington.edu/warde
+
+
+### Citation {-}
+
+
+Holmes, E. E., M. D. Scheuerell, and E. J. Ward. Multivariate Autoregressive Modeling for the Environmental Sciences. NOAA Fisheries, Northwest Fisheries Science Center, 2725 Montlake Blvd E., Seattle, WA 98112.  Contacts eeholmes@uw.edu, eward@uw.edu, and scheuerl@uw.edu.
+
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  'rstan','MARSS','forecast','ggplot2','R2jags','rjags','bookdown', 'knitr', 'rmarkdown','urca','tseries'
+), 'tex/packages.bib')
+```
+
+# Preface {-}
+
 

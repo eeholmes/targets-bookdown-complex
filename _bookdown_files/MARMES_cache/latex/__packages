@@ -1,0 +1,14 @@
+base
+targets
+tarchetypes
+stringr
+magrittr
+tidyverse
+ggplot2
+tibble
+tidyr
+readr
+purrr
+dplyr
+forcats
+bookdown

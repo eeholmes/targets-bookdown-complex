@@ -1,0 +1,165 @@
+```{r rw-setup, include=FALSE, purl=FALSE}
+#in case you forget to add a chunk label
+knitr::opts_knit$set(unnamed.chunk.label = "rw-")
+knitr::opts_chunk$set(echo = TRUE, comment=NA, cache=TRUE, 
+                      tidy.opts=list(width.cutoff=60), tidy=TRUE, fig.align='center', out.width='80%')
+```
+
+# Template {#sec-template}
+\chaptermark{Template}
+
+Start with one paragraph overview.
+
+A script with all the R code in the chapter can be downloaded  [here](./Rcode/template.R). The Rmd for this chapter can be downloaded [here](./Rmds/template.Rmd).
+
+### Data and packages {-}
+
+All the data used in the chapter are in the **MARSS** package.  Install the package, if needed, and load to run the code in the chapter.
+```{r dfa-load-packages, results='hide', message=FALSE, warnings=FALSE}
+library(MARSS)
+```
+
+## Introduction {#sec-template-intro}
+
+Introdution. Here's how to do an equation with numbering.
+
+\begin{equation}
+\begin{gathered}
+\mathbf{y}_t = \mathbf{Z}\mathbf{x}_t+\mathbf{a}+\mathbf{v}_t \text{ where } \mathbf{v}_t \sim \text{MVN}(0,\mathbf{R}) \\
+\mathbf{x}_t = \mathbf{x}_{t-1}+\mathbf{w}_t \text{ where } \mathbf{w}_t \sim \text{MVN}(0,\mathbf{Q}) \\
+\end{gathered}
+(\#eq:template1)
+\end{equation}
+
+
+## New section {#sec-template-2}
+
+New section. Example of an equation with matrix.
+
+\begin{equation}
+\begin{bmatrix}
+    y_{1} \\
+    y_{2} \\
+    y_{3} \\
+    y_{4} \\
+    y_{5} \end{bmatrix}_t = 
+ \begin{bmatrix}
+    z_{11}&z_{12}&z_{13}\\
+    z_{21}&z_{22}&z_{23}\\
+    z_{31}&z_{32}&z_{33}\\
+    z_{41}&z_{42}&z_{43}\\
+    z_{51}&z_{52}&z_{53}\end{bmatrix}   
+ \begin{bmatrix}
+    x_{1} \\
+    x_{2} \\
+    x_{3} \end{bmatrix}_t + 
+ \begin{bmatrix}
+    a_1 \\
+    a_2 \\
+    a_3 \\
+    a_4 \\
+    a_5 \end{bmatrix} + 
+ \begin{bmatrix}
+    v_{1} \\
+    v_{2} \\
+    v_{3} \\
+    v_{4} \\
+    v_{5} \end{bmatrix}_t.
+(\#eq:template2-y)
+\end{equation}
+
+and the process model would look like
+
+\begin{equation}
+\begin{bmatrix}
+    x_{1} \\
+    x_{2} \\
+    x_{3} \end{bmatrix}_t = 
+ \begin{bmatrix}
+    1&0&0 \\
+    0&1&0 \\
+    0&0&1 \end{bmatrix} 
+ \begin{bmatrix}
+    x_{1}\\
+    x_{2}\\
+    x_{3}\end{bmatrix}_{t-1} +
+ \begin{bmatrix}
+    w_{1} \\
+    w_{2} \\
+    w_{3} \end{bmatrix}_t 
+(\#eq:tempate2-x)
+\end{equation}
+
+
+The observation errors would be
+
+\begin{equation}
+\begin{bmatrix}
+    v_{1} \\
+    v_{2} \\
+    v_{3} \\
+    v_{4} \\
+    v_{5} \end{bmatrix}_t 
+ \sim \text{MVN} \begin{pmatrix}
+    \begin{bmatrix}
+    0 \\
+    0 \\
+    0 \\
+    0 \\
+    0 \end{bmatrix},
+ \begin{bmatrix}
+    r_{11}&r_{12}&r_{13}&r_{14}&r_{15}\\
+    r_{12}&r_{22}&r_{23}&r_{24}&r_{25}\\
+    r_{13}&r_{23}&r_{33}&r_{34}&r_{35}\\
+    r_{14}&r_{24}&r_{34}&r_{44}&r_{45}\\
+    r_{15}&r_{25}&r_{35}&r_{45}&r_{55}\end{bmatrix}
+\end{pmatrix}
+(\#eq:template2-oe)
+\end{equation}
+
+And the process errors would be
+
+\begin{equation}
+\begin{bmatrix}
+    w_{1} \\
+    w_{2} \\
+    w_{3} \end{bmatrix}_t
+\sim \text{MVN} \begin{pmatrix}
+ \begin{bmatrix}
+    0 \\
+    0 \\
+    0 \end{bmatrix},
+ \begin{bmatrix}
+    q_{11}&q_{12}&q_{13}\\
+    q_{12}&q_{22}&q_{23}\\
+    q_{13}&q_{23}&q_{33}\end{bmatrix}
+\end{pmatrix}.
+(\#eq:template2-pe)
+\end{equation}
+
+## Section 3 {#sec-template-3}
+
+Another section.
+
+## Discussion  {#sec-template-discussion}
+
+For your homework this week, we will continue to investigate common trends in the Lake Washington plankton data.
+
+1. Fit other DFA models to the phytoplankton data with varying numbers of trends from 1-4 (we fit a 3-trend model above). Do not include any covariates in these models. Using `R="diagonal and unequal"` for the observation errors, which of the DFA models has the most support from the data?
+
+    Plot the model states and loadings as in Section \@ref(sec-dfa-estimated-states). Describe the general patterns in the states and the ways the different taxa load onto those trends.
+
+    Also plot the the model fits as in Section \@ref(sec-dfa-plot-data). Do they reasonable? Are there any particular problems or outliers?
+
+2. How does the best model from Question 1 compare to a DFA model with the same number of trends, but with `R="unconstrained"`? 
+
+    Plot the model states and loadings as in Section \@ref(sec-dfa-estimated-states). Describe the general patterns in the states and the ways the different taxa load onto those trends.
+
+    Also plot the the model fits as in Section \@ref(sec-dfa-plot-data). Do they reasonable? Are there any particular problems or outliers?
+
+3. Fit a DFA model that includes temperature as a covariate and 3 trends (as in Section \@ref(sec-dfa-lakeWA)), but with`R="unconstrained"`? How does this model compare to the model with `R="diagonal and unequal"`? How does it compare to the model in Question 2? 
+
+    Plot the model states and loadings as in Section \@ref(sec-dfa-estimated-states). Describe the general patterns in the states and the ways the different taxa load onto those trends.
+
+   Also plot the the model fits as in Section \@ref(sec-dfa-plot-data).  Do they reasonable? Are there any particular problems or outliers?
+
