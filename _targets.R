@@ -2,7 +2,7 @@ library(targets)
 library(tarchetypes)
 source("R/functions.R")
 source("R/chapterfactory.R")
-source("R/clean_rmd.R")
+#source("R/clean_rmd.R")
 
 options(tidyverse.quiet = TRUE)
 

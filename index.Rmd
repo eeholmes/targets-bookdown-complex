@@ -10,13 +10,8 @@ link-citations: yes
 description: "Multivariate autoregressive modeling for the environmental sciences. This book covers univariate and multivatiate autoregressive state-space modeling, also known as vector autoregressive modeling, with example applications drawn from the ecological, fisheries, and environmental literature."
 cover-image: images/cover.png
 favicon: "favicon.ico"
-output:
-  bookdown::gitbook: default
----
-
-<!--
 site: bookdown::bookdown_site
--->
+---
 
 # Preface {-}
 
@@ -24,7 +19,7 @@ site: bookdown::bookdown_site
 knitr::opts_chunk$set(echo = TRUE, comment=NA, cache=TRUE, tidy.opts=list(width.cutoff=60), tidy=TRUE, fig.align='center', out.width='80%')
 ```
 
-This is material that was developed as part of a course we teach at the University of Washington on applied time series analysis for fisheries and environmental data.  You can find our lectures on our course website [ATSA](https://nwfsc-timeseries.github.io/atsa/).
+This is material that was developed as part of a course we teach at the University of Washington on applied time series analysis for fisheries and environmental data.  You can find our lectures on our course website [ATSA](https://atsa-es.github.io/atsa/).
 
 ### Book package {-}
 
@@ -32,7 +27,7 @@ The book uses a number of R packages and a variety of fisheries data sets.  The 
 
 ```{r preface-load-atsa, eval=FALSE}
 library(devtools)
-devtools::install_github("nwfsc-timeseries/atsalibrary")
+devtools::install_github("atsa-es/atsalibrary")
 ```
 
 ### Authors {-}
@@ -58,7 +53,5 @@ knitr::write_bib(c(
   'rstan','MARSS','forecast','ggplot2','R2jags','rjags','bookdown', 'knitr', 'rmarkdown','urca','tseries'
 ), 'tex/packages.bib')
 ```
-
-# Preface {-}
 
 

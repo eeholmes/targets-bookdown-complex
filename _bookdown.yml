@@ -6,3 +6,4 @@ rmd_files:
   - "rendered-chapters/chap01-rw.Rmd"
   - "rendered-chapters/chap02-uss.Rmd"
   - "references.Rmd"
+rmd_subdir: FALSE

@@ -36,7 +36,11 @@ Introdution. Here's how to do an equation with numbering.
 
 ## Section 3 {#sec-uss-3}
 
-Another section.
+Another section with a plot.
+
+```{r}
+plot(1:10)
+```
 
 ## Discussion  {#sec-uss-discussion}
 

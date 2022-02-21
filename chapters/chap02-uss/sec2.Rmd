@@ -102,3 +102,14 @@ And the process errors would be
 \end{pmatrix}.
 (\#eq:template2-pe)
 \end{equation}
+
+
+And here is a plot.
+
+```{r uss-plot100}
+plot(1:100)
+```
+
+```{r uss-plot10}
+plot(1:10)
+```
