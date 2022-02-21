@@ -33,15 +33,17 @@ bib_files_files|stem|e08d6d2cc7071c3e|5993536cab0b3c4b|ebd347669f71d604|20783663
 bib_file1|stem|85ffef0dec62a453|dc293e1290e6c360|f47bb13d95a320a1|-771832188|tex/Fish507.bib|t19042.8910960895s|c1731a22d9eafddf|140742|file|vector|||0.566||
 bib_file2|stem|ef46db3751d8e999|5d25e5c9fd84f7af|f47bb13d95a320a1|220675284|tex/book.bib|t19042.8910961006s|f4066a65ff755f48|0|file|vector|||0||
 bib_file|stem|7a17995e3764846c|cb3a3fc5871f2898|d3d3d609aa2bafdb|-10091434|tex/bookrefs.bib|t19043.7911661934s|aac15fc5adfc9285|145819|file|vector|||0.572||
-bib_file3|stem|8cf811cd5df1327d|1d3fe060a22055d8|f47bb13d95a320a1|-144633528|tex/packages.bib|t19043.8100313031s|5b4ed7c990a3191a|5077|file|vector|||0||
 outyaml|stem|14f560fbb4c2cf9c|098d310d0b2afc2a|ef46db3751d8e999|-29206959|_output.yml|t19043.8406412002s|f2f2c895b8fc004d|584|file|vector|||0.637||
-chap01_file|stem|903ac7797cba41a0|f877d91f562e5129|ef46db3751d8e999|-571864115|chapters/chap01-rw/_chapter.Rmd|t19043.8600963524s|25673b49b7467083|4711|file|vector|||0.611||
 index|stem|be1f6957c0cf794c|f9fbf517228449f8|ef46db3751d8e999|-1857023687|index.Rmd|t19043.9268556839s|98ccba75401080bf|2613|file|vector|||0.62||
 clean_file|function|6dd8f2c92d55ed4f||||||||||||||
 chap02_file|stem|228af8ece003f3b4|efa7ccbd47046247|ef46db3751d8e999|1404542740|chapters/chap02-uss/_chapter.Rmd|t19043.9375476484s|c8ecc6b389811a11|1439|file|vector|||0.626||
 chap01_kids_file_files|stem||25b7921108a052df|071a31a29a6d9aa7|1556576348||t19044.038060204s||0|rds|vector|||0.651|longer object length is not a multiple of shorter object length|object kids not found
-chap01|stem|e48f142f0723225e|ee33f7a1d3eb8a0e|c0ae1ed91973840a|867195237|rendered-chapters/chap01-rw.Rmd|t19044.0556932043s|9f9e35410c75ac5b|4345|file|vector|||0.079||
-yaml|stem|4a338ac6f453ea12|1b398c6cab9f3b3e|ef46db3751d8e999|261465850|_bookdown.yml|t19044.0570513409s|ab284657d4bd29c6|211|file|vector|||0.622||
+chap02_kids_97ece019|branch|c70c00021f9ca15a|31631e739204d2aa|db72022830c39646|-195646112|/Users/eli.holmes/Documents/GitHub/MARMES/chapters/chap02-uss/sec2.Rmd|t19044.057799585s|95cd5abf6bbd7b6f|2014|file|vector|chap02_kids||0||
+chap02_kids|pattern|36e5a8850f09abc8|31631e739204d2aa||502851094||||2014|file|vector||chap02_kids_97ece019|0||
+chap02|stem|c142f3b85e909c1f|b62d1639a84fa578|1bc434e530e98a47|1103852955|rendered-chapters/chap02-uss.Rmd|t19044.0578772892s|4dd5dbe8f4917cd3|3459|file|vector|||0.622||
+chap01_file|stem|cf49383d62a0d661|f877d91f562e5129|ef46db3751d8e999|-571864115|chapters/chap01-rw/_chapter.Rmd|t19044.0774144693s|d297c99ad21ab631|4782|file|vector|||0.615||
+css_file|stem|2a064d433b51998d|9f5008614f62a18c|f47bb13d95a320a1|-1986222428|docs/style.css|t19044.0805270198s|fd2a81a94e07ff63|3002|file|vector|||0.606||
+chap01|stem|c6746a0ee1250e7e|ee33f7a1d3eb8a0e|7db02fc3222af5c7|867195237|rendered-chapters/chap01-rw.Rmd|t19044.1052979198s|978bc578319d5e78|4416|file|vector|||0.08||
 clean_render_old|function|f4fca8882f3c6c3f||||||||||||||
 render_with_deps|function|6786681a3a4e5790||||||||||||||
 create_refs|function|5a326db45846682c||||||||||||||
@@ -50,9 +52,7 @@ find.children|function|9c069ea4bd5e7620||||||||||||||
 change_ext|function|8a4377e5d73b6b8a||||||||||||||
 clean_render|function|ae85fef5443c758e||||||||||||||
 target_factory|function|c3c1321e0b2754c4||||||||||||||
-css_file|stem|2a064d433b51998d|9f5008614f62a18c|f47bb13d95a320a1|-1986222428|docs/style.css|t19044.0571588869s|fd2a81a94e07ff63|3002|file|vector|||0.606||
-chap02_kids_files|stem|7c4dcfdecd817745|8c7994c6f34510c2|58e9d5c2b92fa1a6|1101247815||t19044.0578698748s|6556730b296d7213|119|rds|vector||chap02_kids_files_1358621f|0.631||
-chap02_kids_97ece019|branch|c70c00021f9ca15a|31631e739204d2aa|db72022830c39646|-195646112|/Users/eli.holmes/Documents/GitHub/MARMES/chapters/chap02-uss/sec2.Rmd|t19044.057799585s|95cd5abf6bbd7b6f|2014|file|vector|chap02_kids||0||
-chap02_kids|pattern|36e5a8850f09abc8|31631e739204d2aa||502851094||||2014|file|vector||chap02_kids_97ece019|0||
-chap02|stem|c142f3b85e909c1f|b62d1639a84fa578|1bc434e530e98a47|1103852955|rendered-chapters/chap02-uss.Rmd|t19044.0578772892s|4dd5dbe8f4917cd3|3459|file|vector|||0.622||
-book|stem|4411edb2aea367cc|e1f8bcb2daca53e8|3f7625c9d220e5ed|-1172694532||t19044.0579271982s|6556730b296d7213|119|rds|vector|||4.308||
+yaml|stem|4a338ac6f453ea12|1b398c6cab9f3b3e|ef46db3751d8e999|261465850|_bookdown.yml|t19044.1055592546s|ab284657d4bd29c6|211|file|vector|||0.614||
+bib_file3|stem|8cf811cd5df1327d|1d3fe060a22055d8|f47bb13d95a320a1|-144633528|tex/packages.bib|t19044.1053070196s|5b4ed7c990a3191a|5077|file|vector|||0||
+chap02_kids_files|stem|7c4dcfdecd817745|8c7994c6f34510c2|58e9d5c2b92fa1a6|1101247815||t19044.1057099864s|6556730b296d7213|119|rds|vector||chap02_kids_files_1358621f|0.001||
+book|stem|4411edb2aea367cc|e1f8bcb2daca53e8|5fd86424a0f09494|-1172694532||t19044.1057624212s|6556730b296d7213|119|rds|vector|||4.513||

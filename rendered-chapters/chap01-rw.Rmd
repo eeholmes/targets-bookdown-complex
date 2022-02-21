@@ -1,15 +1,17 @@
 
 
 # Template {#sec-template}
+
 \chaptermark{Template}
 
 Start with one paragraph overview.
 
-A script with all the R code in the chapter can be downloaded  [here](./Rcode/template.R). The Rmd for this chapter can be downloaded [here](./Rmds/template.Rmd).
+A script with all the R code in the chapter can be downloaded [here](./Rcode/template.R). The Rmd for this chapter can be downloaded [here](./Rmds/template.Rmd).
 
-### Data and packages {-}
+### Data and packages {.unnumbered}
 
-All the data used in the chapter are in the **MARSS** package.  Install the package, if needed, and load to run the code in the chapter.
+All the data used in the chapter are in the **MARSS** package. Install the package, if needed, and load to run the code in the chapter.
+
 
 ```r
 library(MARSS)
@@ -19,6 +21,7 @@ library(MARSS)
 
 Introdution. Here's how to do an equation with numbering.
 
+```{=tex}
 \begin{equation}
 \begin{gathered}
 \mathbf{y}_t = \mathbf{Z}\mathbf{x}_t+\mathbf{a}+\mathbf{v}_t \text{ where } \mathbf{v}_t \sim \text{MVN}(0,\mathbf{R}) \\
@@ -26,12 +29,12 @@ Introdution. Here's how to do an equation with numbering.
 \end{gathered}
 (\#eq:template1)
 \end{equation}
-
-
+```
 ## New section {#sec-template-2}
 
 New section. Example of an equation with matrix.
 
+```{=tex}
 \begin{equation}
 \begin{bmatrix}
     y_{1} \\
@@ -63,9 +66,10 @@ New section. Example of an equation with matrix.
     v_{5} \end{bmatrix}_t.
 (\#eq:template2-y)
 \end{equation}
-
+```
 and the process model would look like
 
+```{=tex}
 \begin{equation}
 \begin{bmatrix}
     x_{1} \\
@@ -85,10 +89,10 @@ and the process model would look like
     w_{3} \end{bmatrix}_t 
 (\#eq:tempate2-x)
 \end{equation}
-
-
+```
 The observation errors would be
 
+```{=tex}
 \begin{equation}
 \begin{bmatrix}
     v_{1} \\
@@ -112,9 +116,10 @@ The observation errors would be
 \end{pmatrix}
 (\#eq:template2-oe)
 \end{equation}
-
+```
 And the process errors would be
 
+```{=tex}
 \begin{equation}
 \begin{bmatrix}
     w_{1} \\
@@ -132,27 +137,25 @@ And the process errors would be
 \end{pmatrix}.
 (\#eq:template2-pe)
 \end{equation}
-
+```
 ## Section 3 {#sec-template-3}
 
 Another section.
 
-## Discussion  {#sec-template-discussion}
+## Discussion {#sec-template-discussion}
 
 For your homework this week, we will continue to investigate common trends in the Lake Washington plankton data.
 
-1. Fit other DFA models to the phytoplankton data with varying numbers of trends from 1-4 (we fit a 3-trend model above). Do not include any covariates in these models. Using `R="diagonal and unequal"` for the observation errors, which of the DFA models has the most support from the data?
+1.  Fit other DFA models to the phytoplankton data with varying numbers of trends from 1-4 (we fit a 3-trend model above). Do not include any covariates in these models. Using `R="diagonal and unequal"` for the observation errors, which of the DFA models has the most support from the data?
 
     Plot the model states and loadings as in Section \@ref(sec-template-3). Describe the general patterns in the states and the ways the different taxa load onto those trends.
 
-2. How does the best model from Question 1 compare to a DFA model with the same number of trends, but with `R="unconstrained"`? 
+2.  How does the best model from Question 1 compare to a DFA model with the same number of trends, but with `R="unconstrained"`?
 
     Plot the model states and loadings as in Section \@ref(sec-template-2). Describe the general patterns in the states and the ways the different taxa load onto those trends.
 
     Also plot the the model fits as in Section \@ref(sec-template-3). Do they reasonable? Are there any particular problems or outliers?
 
-3. Fit a DFA model that includes temperature as a covariate and 3 trends (as in Section \@ref(sec-dfa-lakeWA)), but with`R="unconstrained"`? How does this model compare to the model with `R="diagonal and unequal"`? How does it compare to the model in Question 2? 
+3.  Fit a DFA model that includes temperature as a covariate and 3 trends (as in Section \@ref(sec-dfa-lakeWA)), but with`R="unconstrained"`? How does this model compare to the model with `R="diagonal and unequal"`? How does it compare to the model in Question 2?
 
     Plot the model states and loadings as in Section \@ref(sec-template-2). Describe the general patterns in the states and the ways the different taxa load onto those trends.
-
-
