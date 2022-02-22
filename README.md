@@ -1,6 +1,10 @@
 # More complex example using {targets} and {bookdown} {#top}
 
-Fundamentally {targets} and {bookdown} don't play nice together since I cannot see any way to render but keep the figure legends and references. See targets-bookdown repo for more info.
+Fundamentally {targets} and {bookdown} don't play nice together since I cannot see any way to render but keep the figure legends and references. See targets-bookdown repo for more info. I am keeping this since it might be useful for something, but will not be using {targets} in my {bookdown} projects.
+
+<hr>
+
+# Instructions
 
 * [Installing bookdown](#installing-bookdown)
 * [Add a chapter](#add-a-chapter)
