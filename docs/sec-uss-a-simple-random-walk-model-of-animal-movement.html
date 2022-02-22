@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>1.3 Section 3 | Multivariate Autoregressive Modeling for the Environmental Sciences</title>
+  <title>2.8 A random walk model of animal movement | Multivariate Autoregressive Modeling for the Environmental Sciences</title>
   <meta name="description" content="Multivariate autoregressive modeling for the environmental sciences. This book covers univariate and multivatiate autoregressive state-space modeling, also known as vector autoregressive modeling, with example applications drawn from the ecological, fisheries, and environmental literature." />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="1.3 Section 3 | Multivariate Autoregressive Modeling for the Environmental Sciences" />
+  <meta property="og:title" content="2.8 A random walk model of animal movement | Multivariate Autoregressive Modeling for the Environmental Sciences" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="/images/cover.png" />
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="1.3 Section 3 | Multivariate Autoregressive Modeling for the Environmental Sciences" />
+  <meta name="twitter:title" content="2.8 A random walk model of animal movement | Multivariate Autoregressive Modeling for the Environmental Sciences" />
   
   <meta name="twitter:description" content="Multivariate autoregressive modeling for the environmental sciences. This book covers univariate and multivatiate autoregressive state-space modeling, also known as vector autoregressive modeling, with example applications drawn from the ecological, fisheries, and environmental literature." />
   <meta name="twitter:image" content="/images/cover.png" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="sec-template-2.html"/>
-<link rel="next" href="sec-template-discussion.html"/>
+<link rel="prev" href="sec-uss-fitting-with-stan.html"/>
+<link rel="next" href="sec-uss-problems.html"/>
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -187,18 +187,48 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="sec-template-3" class="section level2" number="1.3">
-<h2><span class="header-section-number">1.3</span> Section 3</h2>
-
-<p><img src="figure/plot1-1.png" title="The Nile River flow volume 1871 to 1970 (<code>Nile</code> dataset in R)." alt="The Nile River flow volume 1871 to 1970 (<code>Nile</code> dataset in R)." width="80%" style="display: block; margin: auto;" /></p>
+<div id="sec-uss-a-simple-random-walk-model-of-animal-movement" class="section level2" number="2.8">
+<h2><span class="header-section-number">2.8</span> A random walk model of animal movement</h2>
+<p>A simple random walk model of movement with drift (directional movement) but no correlation is
+<span class="math display" id="eq:uss-movement">\[\begin{gather}
+x_{1,t} = x_{1,t-1} + u_1 + w_{1,t}, \;\; w_{1,t} \sim \,\text{N}(0,\sigma^2_1)\\
+x_{2,t} = x_{2,t-1} + u_2 + w_{2,t}, \;\; w_{2,t} \sim \,\text{N}(0,\sigma^2_2)
+\tag{2.8}
+\end{gather}\]</span>
+where <span class="math inline">\(x_{1,t}\)</span> is the location at time <span class="math inline">\(t\)</span> along one axis (here, longitude) and <span class="math inline">\(x_{2,t}\)</span> is for another, generally orthogonal, axis (in here, latitude). The parameter <span class="math inline">\(u_1\)</span> is the rate of longitudinal movement and <span class="math inline">\(u_2\)</span> is the rate of latitudinal movement. We add errors to our observations of location:
+<span class="math display" id="eq:uss-observe">\[\begin{gather}
+y_{1,t} = x_{1,t} + v_{1,t}, \;\; v_{1,t} \sim \,\text{N}(0,\eta^2_1)\\
+y_{2,t} = x_{2,t} + v_{2,t}, \;\; v_{2,t} \sim \,\text{N}(0,\eta^2_2),
+\tag{2.9}
+\end{gather}\]</span></p>
+<p>This model is comprised of two separate univariate state-space models. Note that <span class="math inline">\(y_1\)</span> depends only on <span class="math inline">\(x_1\)</span> and <span class="math inline">\(y_2\)</span> depends only on <span class="math inline">\(x_2\)</span>. There are no actual interactions between these two univariate models. However, we can write the model down in the form of a multivariate model using diagonal variance-covariance matrices and a diagonal design (<span class="math inline">\(\mathbf{Z}\)</span>) matrix. Because the variance-covariance matrices and <span class="math inline">\(\mathbf{Z}\)</span> are diagonal, the <span class="math inline">\(x_1\)</span>:<span class="math inline">\(y_1\)</span> and <span class="math inline">\(x_2\)</span>:<span class="math inline">\(y_2\)</span> processes will be independent as intended. Here are Equations <a href="sec-uss-a-simple-random-walk-model-of-animal-movement.html#eq:uss-movement">(2.8)</a> and <a href="sec-uss-a-simple-random-walk-model-of-animal-movement.html#eq:uss-observe">(2.9)</a> written as a MARSS model (in matrix form):
+<span class="math display" id="eq:uss-mssmlong-b" id="eq:uss-mssmlong-a">\[\begin{gather}
+\begin{bmatrix}x_{1,t}\\x_{2,t}\end{bmatrix}
+= \begin{bmatrix}x_{1,t-1}\\x_{2,t-1}\end{bmatrix}
++ \begin{bmatrix}u_1\\u_2\end{bmatrix}
++ \begin{bmatrix}w_{1,t}\\w_{2,t}\end{bmatrix},
+ \textrm{ } \mathbf{w}_t \sim \,\text{MVN}\begin{pmatrix}0,\begin{bmatrix}\sigma^2_1&amp;0\\0&amp;\sigma^2_2\end{bmatrix} \end{pmatrix}  \tag{2.10} \\
+\nonumber \\
+\begin{bmatrix}y_{1,t}\\y_{2,t}\end{bmatrix}
+= \begin{bmatrix}1&amp;0\\0&amp;1\end{bmatrix}
+\begin{bmatrix}x_{1,t}\\x_{2,t}\end{bmatrix}
++ \begin{bmatrix}v_{1,t}\\ v_{2,t}\end{bmatrix},
+ \textrm{ } \mathbf{v}_t \sim \,\text{MVN}\begin{pmatrix}0,\begin{bmatrix}\eta^2_1&amp;0\\0&amp;\eta^2_2\end{bmatrix} \end{pmatrix}  \tag{2.11}
+\end{gather}\]</span>
+The variance-covariance matrix for <span class="math inline">\(\mathbf{w}_t\)</span> is a diagonal matrix with unequal variances, <span class="math inline">\(\sigma^2_1\)</span> and <span class="math inline">\(\sigma^2_2\)</span>. The variance-covariance matrix for <span class="math inline">\(\mathbf{v}_t\)</span> is a diagonal matrix with unequal variances, <span class="math inline">\(\eta^2_1\)</span> and <span class="math inline">\(\eta^2_2\)</span>. We can write this succinctly as
+<span class="math display" id="eq:uss-mssm">\[\begin{gather}
+\mathbf{x}_t = \mathbf{x}_{t-1} + \mathbf{u} + \mathbf{w}_t, \;\; \mathbf{w}_t \sim \,\text{MVN}(0,\mathbf{Q}) \\
+\mathbf{y}_t = \mathbf{x}_{t} + \mathbf{v}_t, \;\; \mathbf{v}_t \sim \,\text{MVN}(0,\mathbf{R}). 
+\tag{2.12}
+\end{gather}\]</span></p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="sec-template-2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="sec-template-discussion.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="sec-uss-fitting-with-stan.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="sec-uss-problems.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -229,7 +259,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/atsa-es/MARMES/blob/master/rendered-chapters/chap01-rw.Rmd",
+"link": "https://github.com/atsa-es/MARMES/blob/master/rendered-chapters/chap02-uss.Rmd",
 "text": "Edit"
 },
 "history": {

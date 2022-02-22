@@ -13,6 +13,7 @@ target_factory <- function(name, dir) {
   kids_file <- paste0(name_chap, "_kids")
   sym_file <- as.symbol(name_file)
   kids <- find.children(file.path("chapters", dir, "_chapter.Rmd"))
+  # clean_render is defined in functions.R
   command_render <- substitute(
     clean_render(outname, chapfile, texfile=texfile), 
     env = list(outname = dir, chapfile = sym_file, texfile = as.symbol("mathdefs_file")))

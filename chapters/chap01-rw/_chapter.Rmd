@@ -144,7 +144,12 @@ And the process errors would be
 ```
 ## Section 3 {#sec-template-3}
 
-Another section.
+(ref:plot1) The Nile River flow volume 1871 to 1970 (```Nile``` dataset in R).
+
+```{r plot1, echo=FALSE, fig=TRUE, fig.cap='(ref:plot1)'}
+plot(Nile,ylab="Flow volume",xlab="Year")
+```
+
 
 ## Discussion {#sec-template-discussion}
 

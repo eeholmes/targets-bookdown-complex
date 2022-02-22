@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2.6 Fitting with JAGS | Multivariate Autoregressive Modeling for the Environmental Sciences</title>
+  <meta name="description" content="Multivariate autoregressive modeling for the environmental sciences. This book covers univariate and multivatiate autoregressive state-space modeling, also known as vector autoregressive modeling, with example applications drawn from the ecological, fisheries, and environmental literature." />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2.6 Fitting with JAGS | Multivariate Autoregressive Modeling for the Environmental Sciences" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="/images/cover.png" />
+  <meta property="og:description" content="Multivariate autoregressive modeling for the environmental sciences. This book covers univariate and multivatiate autoregressive state-space modeling, also known as vector autoregressive modeling, with example applications drawn from the ecological, fisheries, and environmental literature." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2.6 Fitting with JAGS | Multivariate Autoregressive Modeling for the Environmental Sciences" />
+  
+  <meta name="twitter:description" content="Multivariate autoregressive modeling for the environmental sciences. This book covers univariate and multivatiate autoregressive state-space modeling, also known as vector autoregressive modeling, with example applications drawn from the ecological, fisheries, and environmental literature." />
+  <meta name="twitter:image" content="/images/cover.png" />
+
+<meta name="author" content="E. E. Holmes, M. D. Scheuerell, and E. J. Ward" />
+
+
+<meta name="date" content="2022-02-21" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+<link rel="prev" href="sec-uss-basic-diagnostics.html"/>
+<link rel="next" href="sec-uss-fitting-with-stan.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Multivarite Autoregressive Modeling</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#book-package"><i class="fa fa-check"></i>Book package</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#authors"><i class="fa fa-check"></i>Authors</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#citation"><i class="fa fa-check"></i>Citation</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="sec-template.html"><a href="sec-template.html"><i class="fa fa-check"></i><b>1</b> Template</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-template.html"><a href="sec-template.html#data-and-packages"><i class="fa fa-check"></i>Data and packages</a></li>
+<li class="chapter" data-level="1.1" data-path="sec-template-intro.html"><a href="sec-template-intro.html"><i class="fa fa-check"></i><b>1.1</b> Introduction</a></li>
+<li class="chapter" data-level="1.2" data-path="sec-template-2.html"><a href="sec-template-2.html"><i class="fa fa-check"></i><b>1.2</b> New section</a></li>
+<li class="chapter" data-level="1.3" data-path="sec-template-3.html"><a href="sec-template-3.html"><i class="fa fa-check"></i><b>1.3</b> Section 3</a></li>
+<li class="chapter" data-level="1.4" data-path="sec-template-discussion.html"><a href="sec-template-discussion.html"><i class="fa fa-check"></i><b>1.4</b> Discussion</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="chap-univariate-state-space.html"><a href="chap-univariate-state-space.html"><i class="fa fa-check"></i><b>2</b> Univariate state-space models</a>
+<ul>
+<li class="chapter" data-level="" data-path="chap-univariate-state-space.html"><a href="chap-univariate-state-space.html#data-and-packages-1"><i class="fa fa-check"></i>Data and packages</a></li>
+<li class="chapter" data-level="2.1" data-path="sec-uss-fitting-a-state-space-model-with-marss.html"><a href="sec-uss-fitting-a-state-space-model-with-marss.html"><i class="fa fa-check"></i><b>2.1</b> Fitting with {MARSS}</a></li>
+<li class="chapter" data-level="2.2" data-path="sec-uss-examples-using-the-nile-river-data.html"><a href="sec-uss-examples-using-the-nile-river-data.html"><i class="fa fa-check"></i><b>2.2</b> Examples using the Nile river data</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="sec-uss-examples-using-the-nile-river-data.html"><a href="sec-uss-examples-using-the-nile-river-data.html#sec-uss-flat-level-model"><i class="fa fa-check"></i><b>2.2.1</b> Flat level model</a></li>
+<li class="chapter" data-level="2.2.2" data-path="sec-uss-examples-using-the-nile-river-data.html"><a href="sec-uss-examples-using-the-nile-river-data.html#sec-uss-linear-trend-in-flow-model"><i class="fa fa-check"></i><b>2.2.2</b> Linear trend in flow model</a></li>
+<li class="chapter" data-level="2.2.3" data-path="sec-uss-examples-using-the-nile-river-data.html"><a href="sec-uss-examples-using-the-nile-river-data.html#sec-uss-stochastic-level-model"><i class="fa fa-check"></i><b>2.2.3</b> Stochastic level model</a></li>
+<li class="chapter" data-level="2.2.4" data-path="sec-uss-examples-using-the-nile-river-data.html"><a href="sec-uss-examples-using-the-nile-river-data.html#sec-uss-stochastic-level-model-with-drift"><i class="fa fa-check"></i><b>2.2.4</b> Stochastic level model with drift</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="sec-uss-the-structts-function.html"><a href="sec-uss-the-structts-function.html"><i class="fa fa-check"></i><b>2.3</b> The StructTS function</a></li>
+<li class="chapter" data-level="2.4" data-path="sec-uss-comparing-models-with-aic-and-model-weights.html"><a href="sec-uss-comparing-models-with-aic-and-model-weights.html"><i class="fa fa-check"></i><b>2.4</b> Comparing models with AIC and model weights</a></li>
+<li class="chapter" data-level="2.5" data-path="sec-uss-basic-diagnostics.html"><a href="sec-uss-basic-diagnostics.html"><i class="fa fa-check"></i><b>2.5</b> Basic diagnostics</a></li>
+<li class="chapter" data-level="2.6" data-path="sec-uss-fitting-with-jags.html"><a href="sec-uss-fitting-with-jags.html"><i class="fa fa-check"></i><b>2.6</b> Fitting with JAGS</a></li>
+<li class="chapter" data-level="2.7" data-path="sec-uss-fitting-with-stan.html"><a href="sec-uss-fitting-with-stan.html"><i class="fa fa-check"></i><b>2.7</b> Fitting with Stan</a></li>
+<li class="chapter" data-level="2.8" data-path="sec-uss-a-simple-random-walk-model-of-animal-movement.html"><a href="sec-uss-a-simple-random-walk-model-of-animal-movement.html"><i class="fa fa-check"></i><b>2.8</b> A random walk model of animal movement</a></li>
+<li class="chapter" data-level="2.9" data-path="sec-uss-problems.html"><a href="sec-uss-problems.html"><i class="fa fa-check"></i><b>2.9</b> Problems</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Multivariate Autoregressive Modeling for the Environmental Sciences</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="sec-uss-fitting-with-jags" class="section level2" number="2.6">
+<h2><span class="header-section-number">2.6</span> Fitting with JAGS</h2>
+<p>Here we show how to fit the stochastic level model, model 3 Equation <a href="sec-uss-examples-using-the-nile-river-data.html#eq:uss-random-walk-w-noise-w-drift">(2.7)</a>, with JAGS. This is a model where the level is a random walk with drift and the Nile River flow is that level plus error.</p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="sec-uss-fitting-with-jags.html#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(datasets)</span>
+<span id="cb93-2"><a href="sec-uss-fitting-with-jags.html#cb93-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(Nile)</span></code></pre></div>
+<p>This section requires that you have JAGS installed and the {R2jags}, {rjags} and {coda} R packages loaded.</p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="sec-uss-fitting-with-jags.html#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
+<span id="cb94-2"><a href="sec-uss-fitting-with-jags.html#cb94-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rjags)</span>
+<span id="cb94-3"><a href="sec-uss-fitting-with-jags.html#cb94-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(coda)</span></code></pre></div>
+<p>The first step is to write the model for JAGS to a file (filename in <code>model.loc</code>):</p>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="sec-uss-fitting-with-jags.html#cb95-1" aria-hidden="true" tabindex="-1"></a>model.loc <span class="ot">&lt;-</span> <span class="st">&quot;ss_model.txt&quot;</span></span>
+<span id="cb95-2"><a href="sec-uss-fitting-with-jags.html#cb95-2" aria-hidden="true" tabindex="-1"></a>jagsscript <span class="ot">&lt;-</span> <span class="fu">cat</span>(<span class="st">&quot;</span></span>
+<span id="cb95-3"><a href="sec-uss-fitting-with-jags.html#cb95-3" aria-hidden="true" tabindex="-1"></a><span class="st">   model {  </span></span>
+<span id="cb95-4"><a href="sec-uss-fitting-with-jags.html#cb95-4" aria-hidden="true" tabindex="-1"></a><span class="st">   # priors on parameters</span></span>
+<span id="cb95-5"><a href="sec-uss-fitting-with-jags.html#cb95-5" aria-hidden="true" tabindex="-1"></a><span class="st">   mu ~ dnorm(Y1, 1/(Y1*100)); # normal mean = 0, sd = 1/sqrt(0.01)</span></span>
+<span id="cb95-6"><a href="sec-uss-fitting-with-jags.html#cb95-6" aria-hidden="true" tabindex="-1"></a><span class="st">   tau.q ~ dgamma(0.001,0.001); # This is inverse gamma</span></span>
+<span id="cb95-7"><a href="sec-uss-fitting-with-jags.html#cb95-7" aria-hidden="true" tabindex="-1"></a><span class="st">   sd.q &lt;- 1/sqrt(tau.q); # sd is treated as derived parameter</span></span>
+<span id="cb95-8"><a href="sec-uss-fitting-with-jags.html#cb95-8" aria-hidden="true" tabindex="-1"></a><span class="st">   tau.r ~ dgamma(0.001,0.001); # This is inverse gamma</span></span>
+<span id="cb95-9"><a href="sec-uss-fitting-with-jags.html#cb95-9" aria-hidden="true" tabindex="-1"></a><span class="st">   sd.r &lt;- 1/sqrt(tau.r); # sd is treated as derived parameter</span></span>
+<span id="cb95-10"><a href="sec-uss-fitting-with-jags.html#cb95-10" aria-hidden="true" tabindex="-1"></a><span class="st">   u ~ dnorm(0, 0.01);</span></span>
+<span id="cb95-11"><a href="sec-uss-fitting-with-jags.html#cb95-11" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb95-12"><a href="sec-uss-fitting-with-jags.html#cb95-12" aria-hidden="true" tabindex="-1"></a><span class="st">   # Because init X is specified at t=0</span></span>
+<span id="cb95-13"><a href="sec-uss-fitting-with-jags.html#cb95-13" aria-hidden="true" tabindex="-1"></a><span class="st">   X0 &lt;- mu</span></span>
+<span id="cb95-14"><a href="sec-uss-fitting-with-jags.html#cb95-14" aria-hidden="true" tabindex="-1"></a><span class="st">   X[1] ~ dnorm(X0+u,tau.q);</span></span>
+<span id="cb95-15"><a href="sec-uss-fitting-with-jags.html#cb95-15" aria-hidden="true" tabindex="-1"></a><span class="st">   Y[1] ~ dnorm(X[1], tau.r);</span></span>
+<span id="cb95-16"><a href="sec-uss-fitting-with-jags.html#cb95-16" aria-hidden="true" tabindex="-1"></a><span class="st"> </span></span>
+<span id="cb95-17"><a href="sec-uss-fitting-with-jags.html#cb95-17" aria-hidden="true" tabindex="-1"></a><span class="st">   for(i in 2:TT) {</span></span>
+<span id="cb95-18"><a href="sec-uss-fitting-with-jags.html#cb95-18" aria-hidden="true" tabindex="-1"></a><span class="st">   predX[i] &lt;- X[i-1]+u; </span></span>
+<span id="cb95-19"><a href="sec-uss-fitting-with-jags.html#cb95-19" aria-hidden="true" tabindex="-1"></a><span class="st">   X[i] ~ dnorm(predX[i],tau.q); # Process variation</span></span>
+<span id="cb95-20"><a href="sec-uss-fitting-with-jags.html#cb95-20" aria-hidden="true" tabindex="-1"></a><span class="st">   Y[i] ~ dnorm(X[i], tau.r); # Observation variation</span></span>
+<span id="cb95-21"><a href="sec-uss-fitting-with-jags.html#cb95-21" aria-hidden="true" tabindex="-1"></a><span class="st">   }</span></span>
+<span id="cb95-22"><a href="sec-uss-fitting-with-jags.html#cb95-22" aria-hidden="true" tabindex="-1"></a><span class="st">   }                  </span></span>
+<span id="cb95-23"><a href="sec-uss-fitting-with-jags.html#cb95-23" aria-hidden="true" tabindex="-1"></a><span class="st">   &quot;</span>,</span>
+<span id="cb95-24"><a href="sec-uss-fitting-with-jags.html#cb95-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">file =</span> model.loc)</span></code></pre></div>
+<p>Next we specify the data (and any other input) that the JAGS code needs. In this case, we need to pass in <code>dat</code> and the number of time steps since that is used in the for loop. We also specify the parameters that we want to monitor. We need to specify at least one, but we will monitor all of them so we can plot them after fitting. Note, that the hidden state is a parameter in the Bayesian context (but not in the maximum likelihood context).</p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="sec-uss-fitting-with-jags.html#cb96-1" aria-hidden="true" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">Y =</span> y, <span class="at">TT =</span> <span class="fu">length</span>(y), <span class="at">Y1 =</span> y[<span class="dv">1</span>])</span>
+<span id="cb96-2"><a href="sec-uss-fitting-with-jags.html#cb96-2" aria-hidden="true" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;sd.q&quot;</span>, <span class="st">&quot;sd.r&quot;</span>, <span class="st">&quot;X&quot;</span>, <span class="st">&quot;mu&quot;</span>, <span class="st">&quot;u&quot;</span>)</span></code></pre></div>
+<p>Now we can fit the model:</p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="sec-uss-fitting-with-jags.html#cb97-1" aria-hidden="true" tabindex="-1"></a>mod_ss <span class="ot">&lt;-</span> <span class="fu">jags</span>(jags.data, <span class="at">parameters.to.save =</span> jags.params, <span class="at">model.file =</span> model.loc,</span>
+<span id="cb97-2"><a href="sec-uss-fitting-with-jags.html#cb97-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.burnin =</span> <span class="dv">5000</span>, <span class="at">n.thin =</span> <span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">10000</span>,</span>
+<span id="cb97-3"><a href="sec-uss-fitting-with-jags.html#cb97-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">DIC =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>We can then show the posteriors along with the MLEs from MARSS on top (Figure <a href="#fig:uss-fig-posteriors"><strong>??</strong></a> ) using the code below.</p>
+
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="sec-uss-fitting-with-jags.html#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attach.jags</span>(mod_ss)</span>
+<span id="cb98-2"><a href="sec-uss-fitting-with-jags.html#cb98-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb98-3"><a href="sec-uss-fitting-with-jags.html#cb98-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(mu)</span>
+<span id="cb98-4"><a href="sec-uss-fitting-with-jags.html#cb98-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">coef</span>(kem<span class="fl">.3</span>)<span class="sc">$</span>x0, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb98-5"><a href="sec-uss-fitting-with-jags.html#cb98-5" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(u)</span>
+<span id="cb98-6"><a href="sec-uss-fitting-with-jags.html#cb98-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">coef</span>(kem<span class="fl">.3</span>)<span class="sc">$</span>U, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb98-7"><a href="sec-uss-fitting-with-jags.html#cb98-7" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log</span>(sd.q<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb98-8"><a href="sec-uss-fitting-with-jags.html#cb98-8" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">log</span>(<span class="fu">coef</span>(kem<span class="fl">.3</span>)<span class="sc">$</span>Q), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb98-9"><a href="sec-uss-fitting-with-jags.html#cb98-9" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log</span>(sd.r<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb98-10"><a href="sec-uss-fitting-with-jags.html#cb98-10" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">log</span>(<span class="fu">coef</span>(kem<span class="fl">.3</span>)<span class="sc">$</span>R), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="figure/uss-fig-posteriors-1.png" title="The posteriors for model 3 with MLE estimates from <code>MARSS()</code> shown in red." alt="The posteriors for model 3 with MLE estimates from <code>MARSS()</code> shown in red." width="80%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="sec-uss-fitting-with-jags.html#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">detach.jags</span>()</span></code></pre></div>
+<p>To plot the estimated states ( Figure <a href="#fig:uss-fig-bayesian-states"><strong>??</strong></a> ), we write a helper function:</p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="sec-uss-fitting-with-jags.html#cb100-1" aria-hidden="true" tabindex="-1"></a>plotModelOutput <span class="ot">&lt;-</span> <span class="cf">function</span>(jagsmodel, Y) {</span>
+<span id="cb100-2"><a href="sec-uss-fitting-with-jags.html#cb100-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">attach.jags</span>(jagsmodel)</span>
+<span id="cb100-3"><a href="sec-uss-fitting-with-jags.html#cb100-3" aria-hidden="true" tabindex="-1"></a>    x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="fu">length</span>(Y))</span>
+<span id="cb100-4"><a href="sec-uss-fitting-with-jags.html#cb100-4" aria-hidden="true" tabindex="-1"></a>    XPred <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="fu">apply</span>(X, <span class="dv">2</span>, quantile, <span class="fl">0.025</span>), <span class="fu">apply</span>(X, <span class="dv">2</span>,</span>
+<span id="cb100-5"><a href="sec-uss-fitting-with-jags.html#cb100-5" aria-hidden="true" tabindex="-1"></a>        mean), <span class="fu">apply</span>(X, <span class="dv">2</span>, quantile, <span class="fl">0.975</span>))</span>
+<span id="cb100-6"><a href="sec-uss-fitting-with-jags.html#cb100-6" aria-hidden="true" tabindex="-1"></a>    ylims <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">min</span>(<span class="fu">c</span>(Y, XPred), <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="fu">max</span>(<span class="fu">c</span>(Y, XPred),</span>
+<span id="cb100-7"><a href="sec-uss-fitting-with-jags.html#cb100-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb100-8"><a href="sec-uss-fitting-with-jags.html#cb100-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plot</span>(Y, <span class="at">col =</span> <span class="st">&quot;white&quot;</span>, <span class="at">ylim =</span> ylims, <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;State predictions&quot;</span>)</span>
+<span id="cb100-9"><a href="sec-uss-fitting-with-jags.html#cb100-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">polygon</span>(<span class="fu">c</span>(x, <span class="fu">rev</span>(x)), <span class="fu">c</span>(XPred[, <span class="dv">1</span>], <span class="fu">rev</span>(XPred[, <span class="dv">3</span>])), <span class="at">col =</span> <span class="st">&quot;grey70&quot;</span>,</span>
+<span id="cb100-10"><a href="sec-uss-fitting-with-jags.html#cb100-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">border =</span> <span class="cn">NA</span>)</span>
+<span id="cb100-11"><a href="sec-uss-fitting-with-jags.html#cb100-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lines</span>(XPred[, <span class="dv">2</span>])</span>
+<span id="cb100-12"><a href="sec-uss-fitting-with-jags.html#cb100-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">points</span>(Y)</span>
+<span id="cb100-13"><a href="sec-uss-fitting-with-jags.html#cb100-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="sec-uss-fitting-with-jags.html#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotModelOutput</span>(mod_ss, y)</span>
+<span id="cb101-2"><a href="sec-uss-fitting-with-jags.html#cb101-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(kem<span class="fl">.3</span><span class="sc">$</span>states[<span class="dv">1</span>, ], <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb101-3"><a href="sec-uss-fitting-with-jags.html#cb101-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fl">1.96</span> <span class="sc">*</span> kem<span class="fl">.3</span><span class="sc">$</span>states.se[<span class="dv">1</span>, ] <span class="sc">+</span> kem<span class="fl">.3</span><span class="sc">$</span>states[<span class="dv">1</span>, ], <span class="at">col =</span> <span class="st">&quot;red&quot;</span>,</span>
+<span id="cb101-4"><a href="sec-uss-fitting-with-jags.html#cb101-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb101-5"><a href="sec-uss-fitting-with-jags.html#cb101-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="sc">-</span><span class="fl">1.96</span> <span class="sc">*</span> kem<span class="fl">.3</span><span class="sc">$</span>states.se[<span class="dv">1</span>, ] <span class="sc">+</span> kem<span class="fl">.3</span><span class="sc">$</span>states[<span class="dv">1</span>, ], <span class="at">col =</span> <span class="st">&quot;red&quot;</span>,</span>
+<span id="cb101-6"><a href="sec-uss-fitting-with-jags.html#cb101-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb101-7"><a href="sec-uss-fitting-with-jags.html#cb101-7" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">&quot;State estimate and data from</span><span class="sc">\n</span><span class="st">JAGS (black) versus MARSS (red)&quot;</span>)</span></code></pre></div>
+<p><img src="figure/uss-fig-bayesian-states-1.png" title="The estimated states from the Bayesian fit along with 95% credible intervals (black and grey) with the MLE states and 95% condidence intervals in red." alt="The estimated states from the Bayesian fit along with 95% credible intervals (black and grey) with the MLE states and 95% condidence intervals in red." width="80%" style="display: block; margin: auto;" /></p>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="sec-uss-basic-diagnostics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="sec-uss-fitting-with-stan.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/atsa-es/MARMES/blob/master/rendered-chapters/chap02-uss.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["MARMES.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -140,7 +140,10 @@ And the process errors would be
 ```
 ## Section 3 {#sec-template-3}
 
-Another section.
+(ref:plot1) The Nile River flow volume 1871 to 1970 (```Nile``` dataset in R).
+
+<img src="figure/plot1-1.png" title="(ref:plot1)" alt="(ref:plot1)" width="80%" style="display: block; margin: auto;" />
+
 
 ## Discussion {#sec-template-discussion}
 

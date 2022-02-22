@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>1.3 Section 3 | Multivariate Autoregressive Modeling for the Environmental Sciences</title>
+  <title>2.3 The StructTS function | Multivariate Autoregressive Modeling for the Environmental Sciences</title>
   <meta name="description" content="Multivariate autoregressive modeling for the environmental sciences. This book covers univariate and multivatiate autoregressive state-space modeling, also known as vector autoregressive modeling, with example applications drawn from the ecological, fisheries, and environmental literature." />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="1.3 Section 3 | Multivariate Autoregressive Modeling for the Environmental Sciences" />
+  <meta property="og:title" content="2.3 The StructTS function | Multivariate Autoregressive Modeling for the Environmental Sciences" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="/images/cover.png" />
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="1.3 Section 3 | Multivariate Autoregressive Modeling for the Environmental Sciences" />
+  <meta name="twitter:title" content="2.3 The StructTS function | Multivariate Autoregressive Modeling for the Environmental Sciences" />
   
   <meta name="twitter:description" content="Multivariate autoregressive modeling for the environmental sciences. This book covers univariate and multivatiate autoregressive state-space modeling, also known as vector autoregressive modeling, with example applications drawn from the ecological, fisheries, and environmental literature." />
   <meta name="twitter:image" content="/images/cover.png" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="sec-template-2.html"/>
-<link rel="next" href="sec-template-discussion.html"/>
+<link rel="prev" href="sec-uss-examples-using-the-nile-river-data.html"/>
+<link rel="next" href="sec-uss-comparing-models-with-aic-and-model-weights.html"/>
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -187,18 +187,57 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="sec-template-3" class="section level2" number="1.3">
-<h2><span class="header-section-number">1.3</span> Section 3</h2>
+<div id="sec-uss-the-structts-function" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> The StructTS function</h2>
+<p>The <code>StructTS</code> function in the {stats} package in R will also fit the stochastic level model:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="sec-uss-the-structts-function.html#cb29-1" aria-hidden="true" tabindex="-1"></a>fit.sts <span class="ot">&lt;-</span> <span class="fu">StructTS</span>(dat, <span class="at">type =</span> <span class="st">&quot;level&quot;</span>)</span>
+<span id="cb29-2"><a href="sec-uss-the-structts-function.html#cb29-2" aria-hidden="true" tabindex="-1"></a>fit.sts</span></code></pre></div>
+<pre><code>
+Call:
+StructTS(x = dat, type = &quot;level&quot;)
 
-<p><img src="figure/plot1-1.png" title="The Nile River flow volume 1871 to 1970 (<code>Nile</code> dataset in R)." alt="The Nile River flow volume 1871 to 1970 (<code>Nile</code> dataset in R)." width="80%" style="display: block; margin: auto;" /></p>
+Variances:
+  level  epsilon  
+   1469    15099  </code></pre>
+<p>The estimates from <code>StructTS()</code> will be different (though similar) from <code>MARSS()</code> because <code>StructTS()</code> uses <span class="math inline">\(x_1 = y_1\)</span>, that is the hidden state at <span class="math inline">\(t=1\)</span> is fixed to be the data at <span class="math inline">\(t=1\)</span>. That is fine if you have a long data set, but would be disastrous for the short data sets typical in fisheries and ecology.</p>
+<p><code>StructTS()</code> is much, much faster for long time series. The example in <code>?StructTS</code> is pretty much instantaneous with <code>StructTS()</code> but takes minutes with the EM algorithm that is the default in <code>MARSS()</code>. With the BFGS algorithm, it is much closer to <code>StructTS()</code>:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="sec-uss-the-structts-function.html#cb31-1" aria-hidden="true" tabindex="-1"></a>trees <span class="ot">&lt;-</span> <span class="fu">window</span>(treering, <span class="at">start =</span> <span class="dv">0</span>)</span>
+<span id="cb31-2"><a href="sec-uss-the-structts-function.html#cb31-2" aria-hidden="true" tabindex="-1"></a>fitts <span class="ot">&lt;-</span> <span class="fu">StructTS</span>(trees, <span class="at">type =</span> <span class="st">&quot;level&quot;</span>)</span>
+<span id="cb31-3"><a href="sec-uss-the-structts-function.html#cb31-3" aria-hidden="true" tabindex="-1"></a>fitem <span class="ot">&lt;-</span> <span class="fu">MARSS</span>(<span class="fu">as.vector</span>(trees), mod.nile<span class="fl">.2</span>)</span>
+<span id="cb31-4"><a href="sec-uss-the-structts-function.html#cb31-4" aria-hidden="true" tabindex="-1"></a>fitbf <span class="ot">&lt;-</span> <span class="fu">MARSS</span>(<span class="fu">as.vector</span>(trees), mod.nile<span class="fl">.2</span>, <span class="at">method =</span> <span class="st">&quot;BFGS&quot;</span>)</span></code></pre></div>
+<p>Note that <code>mod.nile.2</code> specifies a univariate stochastic level model so we can use it just fine with other univariate data sets.</p>
+<p>In addition, <code>fitted(fit.sts)</code> where <code>fit.sts</code> is a fit from <code>StructTS()</code> is very different than <code>fit.marss$states</code> from <code>MARSS()</code>.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="sec-uss-the-structts-function.html#cb32-1" aria-hidden="true" tabindex="-1"></a>t <span class="ot">=</span> <span class="dv">10</span></span>
+<span id="cb32-2"><a href="sec-uss-the-structts-function.html#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fitted</span>(fit.sts)[t]</span></code></pre></div>
+<pre><code>[1] 1162.904</code></pre>
+<p>is the expected value of <span class="math inline">\(y_{t+1}\)</span> (in this case <span class="math inline">\(y_{11}\)</span> since we set <span class="math inline">\(t=10\)</span>) given the data up to <span class="math inline">\(y_t\)</span> (in this case, up to <span class="math inline">\(y_{10}\)</span>). It is called the one-step ahead prediction.<br />
+We are not going to use the one-step ahead predictions unless we are forecasting or doing cross-validation.</p>
+<p>Typically, when we analyze fisheries and ecological data, we want to know the estimate of the state, the <span class="math inline">\(x_t\)</span>, given ALL the data. For example, we might need an estimate of the population size in year 1990 given a time series of counts from 1930 to 2015. We don’t want to use only the data up to 1989; we want to use all the information. <code>fit.marss$states</code> from <code>MARSS()</code> is the expected value of <span class="math inline">\(x_t\)</span> given all the data. For the stochastic level model, that is equal to the expected value of <span class="math inline">\(y_t\)</span> given all the data except <span class="math inline">\(y_t\)</span>.</p>
+<p>If you needed the one-step predictions from <code>MARSS()</code>, you can get them from the Kalman filter output:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="sec-uss-the-structts-function.html#cb34-1" aria-hidden="true" tabindex="-1"></a>kf <span class="ot">=</span> <span class="fu">print</span>(kem<span class="fl">.2</span>, <span class="at">what =</span> <span class="st">&quot;kfs&quot;</span>)</span>
+<span id="cb34-2"><a href="sec-uss-the-structts-function.html#cb34-2" aria-hidden="true" tabindex="-1"></a>kf<span class="sc">$</span>xtt1[<span class="dv">1</span>, t]</span></code></pre></div>
+<p>Passing in <code>what="kfs"</code> returns the Kalman filter/smoother output. The expected value of <span class="math inline">\(x_t\)</span> conditioned on <span class="math inline">\(y_1\)</span> to <span class="math inline">\(y_{t-1}\)</span> is in <code>kf$xtt1</code>. The expected value of <span class="math inline">\(x_t\)</span> conditioned on all the data is in <code>kf$xtT</code>.</p>
+
+<pre><code>Loading required package: lattice</code></pre>
+<pre><code>Loading required package: survival</code></pre>
+<pre><code>Loading required package: Formula</code></pre>
+<pre><code>
+Attaching package: &#39;Hmisc&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:dplyr&#39;:
+
+    src, summarize</code></pre>
+<pre><code>The following objects are masked from &#39;package:base&#39;:
+
+    format.pval, units</code></pre>
+<p><img src="figure/uss-plotfit-1.png" title="The Nile River flow volume with the model estimated flow rates (solid lines). The bottom model is a stochastic level model, meaning there isn’t one level line. Rather the level line is a distribution that has a mean and standard deviation. The solid state line in the bottom plots is the mean of the stochastic level and the 2 standard deviations are shown. The other two models are deterministic level models so the state is not stochastic and does not have a standard deviation." alt="The Nile River flow volume with the model estimated flow rates (solid lines). The bottom model is a stochastic level model, meaning there isn’t one level line. Rather the level line is a distribution that has a mean and standard deviation. The solid state line in the bottom plots is the mean of the stochastic level and the 2 standard deviations are shown. The other two models are deterministic level models so the state is not stochastic and does not have a standard deviation." width="80%" style="display: block; margin: auto;" /></p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="sec-template-2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="sec-template-discussion.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="sec-uss-examples-using-the-nile-river-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="sec-uss-comparing-models-with-aic-and-model-weights.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -229,7 +268,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/atsa-es/MARMES/blob/master/rendered-chapters/chap01-rw.Rmd",
+"link": "https://github.com/atsa-es/MARMES/blob/master/rendered-chapters/chap02-uss.Rmd",
 "text": "Edit"
 },
 "history": {

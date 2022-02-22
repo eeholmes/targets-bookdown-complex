@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2.2 Examples using the Nile river data | Multivariate Autoregressive Modeling for the Environmental Sciences</title>
+  <meta name="description" content="Multivariate autoregressive modeling for the environmental sciences. This book covers univariate and multivatiate autoregressive state-space modeling, also known as vector autoregressive modeling, with example applications drawn from the ecological, fisheries, and environmental literature." />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2.2 Examples using the Nile river data | Multivariate Autoregressive Modeling for the Environmental Sciences" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="/images/cover.png" />
+  <meta property="og:description" content="Multivariate autoregressive modeling for the environmental sciences. This book covers univariate and multivatiate autoregressive state-space modeling, also known as vector autoregressive modeling, with example applications drawn from the ecological, fisheries, and environmental literature." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2.2 Examples using the Nile river data | Multivariate Autoregressive Modeling for the Environmental Sciences" />
+  
+  <meta name="twitter:description" content="Multivariate autoregressive modeling for the environmental sciences. This book covers univariate and multivatiate autoregressive state-space modeling, also known as vector autoregressive modeling, with example applications drawn from the ecological, fisheries, and environmental literature." />
+  <meta name="twitter:image" content="/images/cover.png" />
+
+<meta name="author" content="E. E. Holmes, M. D. Scheuerell, and E. J. Ward" />
+
+
+<meta name="date" content="2022-02-21" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+<link rel="prev" href="sec-uss-fitting-a-state-space-model-with-marss.html"/>
+<link rel="next" href="sec-uss-the-structts-function.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Multivarite Autoregressive Modeling</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#book-package"><i class="fa fa-check"></i>Book package</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#authors"><i class="fa fa-check"></i>Authors</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#citation"><i class="fa fa-check"></i>Citation</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="sec-template.html"><a href="sec-template.html"><i class="fa fa-check"></i><b>1</b> Template</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-template.html"><a href="sec-template.html#data-and-packages"><i class="fa fa-check"></i>Data and packages</a></li>
+<li class="chapter" data-level="1.1" data-path="sec-template-intro.html"><a href="sec-template-intro.html"><i class="fa fa-check"></i><b>1.1</b> Introduction</a></li>
+<li class="chapter" data-level="1.2" data-path="sec-template-2.html"><a href="sec-template-2.html"><i class="fa fa-check"></i><b>1.2</b> New section</a></li>
+<li class="chapter" data-level="1.3" data-path="sec-template-3.html"><a href="sec-template-3.html"><i class="fa fa-check"></i><b>1.3</b> Section 3</a></li>
+<li class="chapter" data-level="1.4" data-path="sec-template-discussion.html"><a href="sec-template-discussion.html"><i class="fa fa-check"></i><b>1.4</b> Discussion</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="chap-univariate-state-space.html"><a href="chap-univariate-state-space.html"><i class="fa fa-check"></i><b>2</b> Univariate state-space models</a>
+<ul>
+<li class="chapter" data-level="" data-path="chap-univariate-state-space.html"><a href="chap-univariate-state-space.html#data-and-packages-1"><i class="fa fa-check"></i>Data and packages</a></li>
+<li class="chapter" data-level="2.1" data-path="sec-uss-fitting-a-state-space-model-with-marss.html"><a href="sec-uss-fitting-a-state-space-model-with-marss.html"><i class="fa fa-check"></i><b>2.1</b> Fitting with {MARSS}</a></li>
+<li class="chapter" data-level="2.2" data-path="sec-uss-examples-using-the-nile-river-data.html"><a href="sec-uss-examples-using-the-nile-river-data.html"><i class="fa fa-check"></i><b>2.2</b> Examples using the Nile river data</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="sec-uss-examples-using-the-nile-river-data.html"><a href="sec-uss-examples-using-the-nile-river-data.html#sec-uss-flat-level-model"><i class="fa fa-check"></i><b>2.2.1</b> Flat level model</a></li>
+<li class="chapter" data-level="2.2.2" data-path="sec-uss-examples-using-the-nile-river-data.html"><a href="sec-uss-examples-using-the-nile-river-data.html#sec-uss-linear-trend-in-flow-model"><i class="fa fa-check"></i><b>2.2.2</b> Linear trend in flow model</a></li>
+<li class="chapter" data-level="2.2.3" data-path="sec-uss-examples-using-the-nile-river-data.html"><a href="sec-uss-examples-using-the-nile-river-data.html#sec-uss-stochastic-level-model"><i class="fa fa-check"></i><b>2.2.3</b> Stochastic level model</a></li>
+<li class="chapter" data-level="2.2.4" data-path="sec-uss-examples-using-the-nile-river-data.html"><a href="sec-uss-examples-using-the-nile-river-data.html#sec-uss-stochastic-level-model-with-drift"><i class="fa fa-check"></i><b>2.2.4</b> Stochastic level model with drift</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="sec-uss-the-structts-function.html"><a href="sec-uss-the-structts-function.html"><i class="fa fa-check"></i><b>2.3</b> The StructTS function</a></li>
+<li class="chapter" data-level="2.4" data-path="sec-uss-comparing-models-with-aic-and-model-weights.html"><a href="sec-uss-comparing-models-with-aic-and-model-weights.html"><i class="fa fa-check"></i><b>2.4</b> Comparing models with AIC and model weights</a></li>
+<li class="chapter" data-level="2.5" data-path="sec-uss-basic-diagnostics.html"><a href="sec-uss-basic-diagnostics.html"><i class="fa fa-check"></i><b>2.5</b> Basic diagnostics</a></li>
+<li class="chapter" data-level="2.6" data-path="sec-uss-fitting-with-jags.html"><a href="sec-uss-fitting-with-jags.html"><i class="fa fa-check"></i><b>2.6</b> Fitting with JAGS</a></li>
+<li class="chapter" data-level="2.7" data-path="sec-uss-fitting-with-stan.html"><a href="sec-uss-fitting-with-stan.html"><i class="fa fa-check"></i><b>2.7</b> Fitting with Stan</a></li>
+<li class="chapter" data-level="2.8" data-path="sec-uss-a-simple-random-walk-model-of-animal-movement.html"><a href="sec-uss-a-simple-random-walk-model-of-animal-movement.html"><i class="fa fa-check"></i><b>2.8</b> A random walk model of animal movement</a></li>
+<li class="chapter" data-level="2.9" data-path="sec-uss-problems.html"><a href="sec-uss-problems.html"><i class="fa fa-check"></i><b>2.9</b> Problems</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Multivariate Autoregressive Modeling for the Environmental Sciences</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="sec-uss-examples-using-the-nile-river-data" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Examples using the Nile river data</h2>
+<p>We will use the data from the Nile River (Figure <a href="#fig:uss-plotdata"><strong>??</strong></a>). We will fit different flow models to the data and compare the models with AIC.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="sec-uss-examples-using-the-nile-river-data.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(datasets)</span>
+<span id="cb11-2"><a href="sec-uss-examples-using-the-nile-river-data.html#cb11-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(Nile)</span></code></pre></div>
+
+<p><img src="figure/uss-plotdata-1.png" title="The Nile River flow volume 1871 to 1970 (<code>Nile</code> dataset in R)." alt="The Nile River flow volume 1871 to 1970 (<code>Nile</code> dataset in R)." width="80%" style="display: block; margin: auto;" /></p>
+<div id="sec-uss-flat-level-model" class="section level3" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Flat level model</h3>
+<p>We will start by modeling these data as a simple average river flow with variability around some level <span class="math inline">\(\mu\)</span>.<br />
+<span class="math display" id="eq:uss-simple-model">\[\begin{equation}
+y_t = \mu + v_t \text{ where } v_t \sim \,\text{N}(0,r)    
+\tag{2.3}
+\end{equation}\]</span>
+where <span class="math inline">\(y_t\)</span> is the river flow volume at year <span class="math inline">\(t\)</span>.</p>
+<p>We can write this model as a univariate state-space model as follows. We use <span class="math inline">\(x_t\)</span> to model the average flow level. <span class="math inline">\(y_t\)</span> is just an observation of this flat <span class="math inline">\(x_t\)</span>. Work through <span class="math inline">\(x_1\)</span>, <span class="math inline">\(x_2\)</span>, <span class="math inline">\(\dots\)</span> starting from <span class="math inline">\(x_0\)</span> to convince yourself that <span class="math inline">\(x_t\)</span> will always equal <span class="math inline">\(\mu\)</span>.
+<span class="math display" id="eq:uss-marss-model-0">\[\begin{equation}
+\begin{gathered}
+x_t = 1 \times x_{t-1}+ 0 + w_t    \text{ where } w_t \sim \,\text{N}(0,0) \\
+y_t = 1 \times x_t + 0 + v_t \text{ where } v_t \sim \,\text{N}(0,r)  \\
+x_0 = \mu 
+\end{gathered}   
+\tag{2.4}
+\end{equation}\]</span>
+The model is specified as a list as follows:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="sec-uss-examples-using-the-nile-river-data.html#cb12-1" aria-hidden="true" tabindex="-1"></a>mod.nile<span class="fl">.0</span> <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">B =</span> <span class="fu">matrix</span>(<span class="dv">1</span>), <span class="at">U =</span> <span class="fu">matrix</span>(<span class="dv">0</span>), <span class="at">Q =</span> <span class="fu">matrix</span>(<span class="dv">0</span>),</span>
+<span id="cb12-2"><a href="sec-uss-examples-using-the-nile-river-data.html#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">Z =</span> <span class="fu">matrix</span>(<span class="dv">1</span>), <span class="at">A =</span> <span class="fu">matrix</span>(<span class="dv">0</span>), <span class="at">R =</span> <span class="fu">matrix</span>(<span class="st">&quot;r&quot;</span>), <span class="at">x0 =</span> <span class="fu">matrix</span>(<span class="st">&quot;mu&quot;</span>),</span>
+<span id="cb12-3"><a href="sec-uss-examples-using-the-nile-river-data.html#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">tinitx =</span> <span class="dv">0</span>)</span></code></pre></div>
+<p>We then fit the model:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="sec-uss-examples-using-the-nile-river-data.html#cb13-1" aria-hidden="true" tabindex="-1"></a>kem<span class="fl">.0</span> <span class="ot">&lt;-</span> <span class="fu">MARSS</span>(dat, <span class="at">model =</span> mod.nile<span class="fl">.0</span>)</span></code></pre></div>
+<p>Output not shown, but here are the estimates and AICc.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="sec-uss-examples-using-the-nile-river-data.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">coef</span>(kem<span class="fl">.0</span>, <span class="at">type =</span> <span class="st">&quot;vector&quot;</span>), <span class="at">LL =</span> kem<span class="fl">.0</span><span class="sc">$</span>logLik, <span class="at">AICc =</span> kem<span class="fl">.0</span><span class="sc">$</span>AICc)</span></code></pre></div>
+<pre><code>       R.r      x0.mu         LL       AICc 
+28351.5675   919.3500  -654.5157  1313.1552 </code></pre>
+</div>
+<div id="sec-uss-linear-trend-in-flow-model" class="section level3" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> Linear trend in flow model</h3>
+<p>Figure <a href="#fig:uss-plotfit"><strong>??</strong></a> shows the fit for the flat average river flow model. Looking at the data, we might expect that a declining average river flow would be better. In MARSS form, that model would be:
+<span class="math display" id="eq:uss-marss-model-1">\[\begin{equation}
+\begin{gathered}
+x_t = 1 \times x_{t-1}+ u + w_t    \text{ where } w_t \sim \,\text{N}(0,0) \\
+y_t = 1 \times x_t + 0 + v_t \text{ where } v_t \sim \,\text{N}(0,r)  \\
+x_0 = \mu
+\end{gathered}   
+\tag{2.5}
+\end{equation}\]</span>
+where <span class="math inline">\(u\)</span> is now the average per-year decline in river flow volume. The model is specified as follows:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="sec-uss-examples-using-the-nile-river-data.html#cb16-1" aria-hidden="true" tabindex="-1"></a>mod.nile<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">B =</span> <span class="fu">matrix</span>(<span class="dv">1</span>), <span class="at">U =</span> <span class="fu">matrix</span>(<span class="st">&quot;u&quot;</span>), <span class="at">Q =</span> <span class="fu">matrix</span>(<span class="dv">0</span>),</span>
+<span id="cb16-2"><a href="sec-uss-examples-using-the-nile-river-data.html#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">Z =</span> <span class="fu">matrix</span>(<span class="dv">1</span>), <span class="at">A =</span> <span class="fu">matrix</span>(<span class="dv">0</span>), <span class="at">R =</span> <span class="fu">matrix</span>(<span class="st">&quot;r&quot;</span>), <span class="at">x0 =</span> <span class="fu">matrix</span>(<span class="st">&quot;mu&quot;</span>),</span>
+<span id="cb16-3"><a href="sec-uss-examples-using-the-nile-river-data.html#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">tinitx =</span> <span class="dv">0</span>)</span></code></pre></div>
+<p>We then fit the model:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="sec-uss-examples-using-the-nile-river-data.html#cb17-1" aria-hidden="true" tabindex="-1"></a>kem<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">MARSS</span>(dat, <span class="at">model =</span> mod.nile<span class="fl">.1</span>)</span></code></pre></div>
+<p>Here are the estimates, log-likelihood and AICc:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="sec-uss-examples-using-the-nile-river-data.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">coef</span>(kem<span class="fl">.1</span>, <span class="at">type =</span> <span class="st">&quot;vector&quot;</span>), <span class="at">LL =</span> kem<span class="fl">.1</span><span class="sc">$</span>logLik, <span class="at">AICc =</span> kem<span class="fl">.1</span><span class="sc">$</span>AICc)</span></code></pre></div>
+<pre><code>         R.r          U.u        x0.mu           LL         AICc 
+22213.595453    -2.692106  1054.935067  -642.315910  1290.881821 </code></pre>
+<p>Figure <a href="#fig:uss-plotfit"><strong>??</strong></a> shows the fits for the two models with deterministic models (flat and declining) for mean river flow along with their AICc values (smaller AICc is better). The AICc for the model with a declining river flow is lower by over 20 (which is a lot).</p>
+</div>
+<div id="sec-uss-stochastic-level-model" class="section level3" number="2.2.3">
+<h3><span class="header-section-number">2.2.3</span> Stochastic level model</h3>
+<p>Looking at the flow levels, we might suspect that a model that allows the average flow to change would model the data better and we might suspect that there have been sudden, and anomalous, changes in the river flow level.
+We will now model the average river flow at year <span class="math inline">\(t\)</span> as a random walk, specifically an autoregressive process which means that average river flow is year <span class="math inline">\(t\)</span> is a function of average river flow in year <span class="math inline">\(t-1\)</span>.<br />
+<span class="math display" id="eq:uss-random-walk-w-noise">\[\begin{equation}
+\begin{gathered}
+x_t = x_{t-1}+w_t \text{ where } w_t \sim \,\text{N}(0,q) \\
+y_t = x_t+v_t \text{ where } v_t \sim \,\text{N}(0,r)  \\
+x_0 = \mu
+\end{gathered}   
+\tag{2.6}
+\end{equation}\]</span>
+As before, <span class="math inline">\(y_t\)</span> is the river flow volume at year <span class="math inline">\(t\)</span>. <span class="math inline">\(x_t\)</span> is the mean level.
+The model is specified as:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="sec-uss-examples-using-the-nile-river-data.html#cb20-1" aria-hidden="true" tabindex="-1"></a>mod.nile<span class="fl">.2</span> <span class="ot">=</span> <span class="fu">list</span>(<span class="at">B =</span> <span class="fu">matrix</span>(<span class="dv">1</span>), <span class="at">U =</span> <span class="fu">matrix</span>(<span class="dv">0</span>), <span class="at">Q =</span> <span class="fu">matrix</span>(<span class="st">&quot;q&quot;</span>),</span>
+<span id="cb20-2"><a href="sec-uss-examples-using-the-nile-river-data.html#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">Z =</span> <span class="fu">matrix</span>(<span class="dv">1</span>), <span class="at">A =</span> <span class="fu">matrix</span>(<span class="dv">0</span>), <span class="at">R =</span> <span class="fu">matrix</span>(<span class="st">&quot;r&quot;</span>), <span class="at">x0 =</span> <span class="fu">matrix</span>(<span class="st">&quot;mu&quot;</span>),</span>
+<span id="cb20-3"><a href="sec-uss-examples-using-the-nile-river-data.html#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">tinitx =</span> <span class="dv">0</span>)</span></code></pre></div>
+<p>We could also use the text shortcuts to specify the model. Because <span class="math inline">\(\mathbf{R}\)</span> and <span class="math inline">\(\mathbf{Q}\)</span> are <span class="math inline">\(1 \times 1\)</span> matrices, “unconstrained,” “diagonal and unequal,” “diagonal and equal” and “equalvarcov” will all lead to a <span class="math inline">\(1 \times 1\)</span> matrix with one estimated element. For <span class="math inline">\(\mathbf{a}\)</span> and <span class="math inline">\(\mathbf{u}\)</span>, the following shortcut could be used:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="sec-uss-examples-using-the-nile-river-data.html#cb21-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="st">&quot;zero&quot;</span></span>
+<span id="cb21-2"><a href="sec-uss-examples-using-the-nile-river-data.html#cb21-2" aria-hidden="true" tabindex="-1"></a>U <span class="ot">&lt;-</span> <span class="st">&quot;zero&quot;</span></span></code></pre></div>
+<p>Because <span class="math inline">\(\mathbf{x}_0\)</span> is <span class="math inline">\(1 \times 1\)</span>, it could be specified as “unequal,” “equal” or “unconstrained.”</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="sec-uss-examples-using-the-nile-river-data.html#cb22-1" aria-hidden="true" tabindex="-1"></a>kem<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">MARSS</span>(dat, <span class="at">model =</span> mod.nile<span class="fl">.2</span>)</span></code></pre></div>
+<p>Here are the estimates, log-likelihood and AICc:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="sec-uss-examples-using-the-nile-river-data.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">coef</span>(kem<span class="fl">.2</span>, <span class="at">type =</span> <span class="st">&quot;vector&quot;</span>), <span class="at">LL =</span> kem<span class="fl">.2</span><span class="sc">$</span>logLik, <span class="at">AICc =</span> kem<span class="fl">.2</span><span class="sc">$</span>AICc)</span></code></pre></div>
+<pre><code>       R.r        Q.q      x0.mu         LL       AICc 
+15065.6121  1425.0030  1111.6338  -637.7631  1281.7762 </code></pre>
+</div>
+<div id="sec-uss-stochastic-level-model-with-drift" class="section level3" number="2.2.4">
+<h3><span class="header-section-number">2.2.4</span> Stochastic level model with drift</h3>
+<p>We can add a drift to term to our random walk; the <span class="math inline">\(u\)</span> in the process model (<span class="math inline">\(x\)</span>) is the drift term. This causes the random walk to tend to trend up or down.</p>
+<p><span class="math display" id="eq:uss-random-walk-w-noise-w-drift">\[\begin{equation}
+\begin{gathered}
+x_t = x_{t-1}+u+w_t \text{ where } w_t \sim \,\text{N}(0,q) \\
+y_t = x_t+v_t \text{ where } v_t \sim \,\text{N}(0,r)  \\
+x_0 = \mu
+\end{gathered}   
+\tag{2.7}
+\end{equation}\]</span>
+The model is then specified by changing <code>U</code> to indicate that a <span class="math inline">\(u\)</span> is estimated:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="sec-uss-examples-using-the-nile-river-data.html#cb25-1" aria-hidden="true" tabindex="-1"></a>mod.nile<span class="fl">.3</span> <span class="ot">=</span> <span class="fu">list</span>(<span class="at">B =</span> <span class="fu">matrix</span>(<span class="dv">1</span>), <span class="at">U =</span> <span class="fu">matrix</span>(<span class="st">&quot;u&quot;</span>), <span class="at">Q =</span> <span class="fu">matrix</span>(<span class="st">&quot;q&quot;</span>),</span>
+<span id="cb25-2"><a href="sec-uss-examples-using-the-nile-river-data.html#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">Z =</span> <span class="fu">matrix</span>(<span class="dv">1</span>), <span class="at">A =</span> <span class="fu">matrix</span>(<span class="dv">0</span>), <span class="at">R =</span> <span class="fu">matrix</span>(<span class="st">&quot;r&quot;</span>), <span class="at">x0 =</span> <span class="fu">matrix</span>(<span class="st">&quot;mu&quot;</span>),</span>
+<span id="cb25-3"><a href="sec-uss-examples-using-the-nile-river-data.html#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">tinitx =</span> <span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="sec-uss-examples-using-the-nile-river-data.html#cb26-1" aria-hidden="true" tabindex="-1"></a>kem<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">MARSS</span>(dat, <span class="at">model =</span> mod.nile<span class="fl">.3</span>)</span></code></pre></div>
+<p>Here are the estimates, log-likelihood and AICc:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="sec-uss-examples-using-the-nile-river-data.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">coef</span>(kem<span class="fl">.3</span>, <span class="at">type =</span> <span class="st">&quot;vector&quot;</span>), <span class="at">LL =</span> kem<span class="fl">.3</span><span class="sc">$</span>logLik, <span class="at">AICc =</span> kem<span class="fl">.3</span><span class="sc">$</span>AICc)</span></code></pre></div>
+<pre><code>         R.r          U.u          Q.q        x0.mu           LL         AICc 
+15585.278194    -3.248793  1088.987455  1124.044484  -637.302692  1283.026436 </code></pre>
+<p>Figure <a href="#fig:uss-plotfit"><strong>??</strong></a> shows all the models along with their AICc values.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="sec-uss-fitting-a-state-space-model-with-marss.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="sec-uss-the-structts-function.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/atsa-es/MARMES/blob/master/rendered-chapters/chap02-uss.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["MARMES.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

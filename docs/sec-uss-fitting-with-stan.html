@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2.7 Fitting with Stan | Multivariate Autoregressive Modeling for the Environmental Sciences</title>
+  <meta name="description" content="Multivariate autoregressive modeling for the environmental sciences. This book covers univariate and multivatiate autoregressive state-space modeling, also known as vector autoregressive modeling, with example applications drawn from the ecological, fisheries, and environmental literature." />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2.7 Fitting with Stan | Multivariate Autoregressive Modeling for the Environmental Sciences" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="/images/cover.png" />
+  <meta property="og:description" content="Multivariate autoregressive modeling for the environmental sciences. This book covers univariate and multivatiate autoregressive state-space modeling, also known as vector autoregressive modeling, with example applications drawn from the ecological, fisheries, and environmental literature." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2.7 Fitting with Stan | Multivariate Autoregressive Modeling for the Environmental Sciences" />
+  
+  <meta name="twitter:description" content="Multivariate autoregressive modeling for the environmental sciences. This book covers univariate and multivatiate autoregressive state-space modeling, also known as vector autoregressive modeling, with example applications drawn from the ecological, fisheries, and environmental literature." />
+  <meta name="twitter:image" content="/images/cover.png" />
+
+<meta name="author" content="E. E. Holmes, M. D. Scheuerell, and E. J. Ward" />
+
+
+<meta name="date" content="2022-02-21" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+<link rel="prev" href="sec-uss-fitting-with-jags.html"/>
+<link rel="next" href="sec-uss-a-simple-random-walk-model-of-animal-movement.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Multivarite Autoregressive Modeling</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#book-package"><i class="fa fa-check"></i>Book package</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#authors"><i class="fa fa-check"></i>Authors</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#citation"><i class="fa fa-check"></i>Citation</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="sec-template.html"><a href="sec-template.html"><i class="fa fa-check"></i><b>1</b> Template</a>
+<ul>
+<li class="chapter" data-level="" data-path="sec-template.html"><a href="sec-template.html#data-and-packages"><i class="fa fa-check"></i>Data and packages</a></li>
+<li class="chapter" data-level="1.1" data-path="sec-template-intro.html"><a href="sec-template-intro.html"><i class="fa fa-check"></i><b>1.1</b> Introduction</a></li>
+<li class="chapter" data-level="1.2" data-path="sec-template-2.html"><a href="sec-template-2.html"><i class="fa fa-check"></i><b>1.2</b> New section</a></li>
+<li class="chapter" data-level="1.3" data-path="sec-template-3.html"><a href="sec-template-3.html"><i class="fa fa-check"></i><b>1.3</b> Section 3</a></li>
+<li class="chapter" data-level="1.4" data-path="sec-template-discussion.html"><a href="sec-template-discussion.html"><i class="fa fa-check"></i><b>1.4</b> Discussion</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="chap-univariate-state-space.html"><a href="chap-univariate-state-space.html"><i class="fa fa-check"></i><b>2</b> Univariate state-space models</a>
+<ul>
+<li class="chapter" data-level="" data-path="chap-univariate-state-space.html"><a href="chap-univariate-state-space.html#data-and-packages-1"><i class="fa fa-check"></i>Data and packages</a></li>
+<li class="chapter" data-level="2.1" data-path="sec-uss-fitting-a-state-space-model-with-marss.html"><a href="sec-uss-fitting-a-state-space-model-with-marss.html"><i class="fa fa-check"></i><b>2.1</b> Fitting with {MARSS}</a></li>
+<li class="chapter" data-level="2.2" data-path="sec-uss-examples-using-the-nile-river-data.html"><a href="sec-uss-examples-using-the-nile-river-data.html"><i class="fa fa-check"></i><b>2.2</b> Examples using the Nile river data</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="sec-uss-examples-using-the-nile-river-data.html"><a href="sec-uss-examples-using-the-nile-river-data.html#sec-uss-flat-level-model"><i class="fa fa-check"></i><b>2.2.1</b> Flat level model</a></li>
+<li class="chapter" data-level="2.2.2" data-path="sec-uss-examples-using-the-nile-river-data.html"><a href="sec-uss-examples-using-the-nile-river-data.html#sec-uss-linear-trend-in-flow-model"><i class="fa fa-check"></i><b>2.2.2</b> Linear trend in flow model</a></li>
+<li class="chapter" data-level="2.2.3" data-path="sec-uss-examples-using-the-nile-river-data.html"><a href="sec-uss-examples-using-the-nile-river-data.html#sec-uss-stochastic-level-model"><i class="fa fa-check"></i><b>2.2.3</b> Stochastic level model</a></li>
+<li class="chapter" data-level="2.2.4" data-path="sec-uss-examples-using-the-nile-river-data.html"><a href="sec-uss-examples-using-the-nile-river-data.html#sec-uss-stochastic-level-model-with-drift"><i class="fa fa-check"></i><b>2.2.4</b> Stochastic level model with drift</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="sec-uss-the-structts-function.html"><a href="sec-uss-the-structts-function.html"><i class="fa fa-check"></i><b>2.3</b> The StructTS function</a></li>
+<li class="chapter" data-level="2.4" data-path="sec-uss-comparing-models-with-aic-and-model-weights.html"><a href="sec-uss-comparing-models-with-aic-and-model-weights.html"><i class="fa fa-check"></i><b>2.4</b> Comparing models with AIC and model weights</a></li>
+<li class="chapter" data-level="2.5" data-path="sec-uss-basic-diagnostics.html"><a href="sec-uss-basic-diagnostics.html"><i class="fa fa-check"></i><b>2.5</b> Basic diagnostics</a></li>
+<li class="chapter" data-level="2.6" data-path="sec-uss-fitting-with-jags.html"><a href="sec-uss-fitting-with-jags.html"><i class="fa fa-check"></i><b>2.6</b> Fitting with JAGS</a></li>
+<li class="chapter" data-level="2.7" data-path="sec-uss-fitting-with-stan.html"><a href="sec-uss-fitting-with-stan.html"><i class="fa fa-check"></i><b>2.7</b> Fitting with Stan</a></li>
+<li class="chapter" data-level="2.8" data-path="sec-uss-a-simple-random-walk-model-of-animal-movement.html"><a href="sec-uss-a-simple-random-walk-model-of-animal-movement.html"><i class="fa fa-check"></i><b>2.8</b> A random walk model of animal movement</a></li>
+<li class="chapter" data-level="2.9" data-path="sec-uss-problems.html"><a href="sec-uss-problems.html"><i class="fa fa-check"></i><b>2.9</b> Problems</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Multivariate Autoregressive Modeling for the Environmental Sciences</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="sec-uss-fitting-with-stan" class="section level2" number="2.7">
+<h2><span class="header-section-number">2.7</span> Fitting with Stan</h2>
+<p>Let’s fit the same model with Stan using the {rstan} package. If you have not already, you will need to install the {rstan} package. This package depends on a number of other packages which should install automatically when you install {rstan}.</p>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="sec-uss-fitting-with-stan.html#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(datasets)</span>
+<span id="cb102-2"><a href="sec-uss-fitting-with-stan.html#cb102-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstan)</span>
+<span id="cb102-3"><a href="sec-uss-fitting-with-stan.html#cb102-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(Nile)</span></code></pre></div>
+<p>First we write the model. We could write this to a file (recommended), but for this example, we write as a character object. Though the syntax is different from the JAGS code, it has many similarities. Note, unlike the JAGS, the Stan does <strong>not allow</strong> any NAs in your data. Thus we have to specify the location of the NAs in our data. The Nile data does not have NAs, but we want to write the code so it would work even if there were NAs.</p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="sec-uss-fitting-with-stan.html#cb103-1" aria-hidden="true" tabindex="-1"></a>scode <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb103-2"><a href="sec-uss-fitting-with-stan.html#cb103-2" aria-hidden="true" tabindex="-1"></a><span class="st">data {</span></span>
+<span id="cb103-3"><a href="sec-uss-fitting-with-stan.html#cb103-3" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower=0&gt; TT;</span></span>
+<span id="cb103-4"><a href="sec-uss-fitting-with-stan.html#cb103-4" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower=0&gt; n_pos; // number of non-NA values</span></span>
+<span id="cb103-5"><a href="sec-uss-fitting-with-stan.html#cb103-5" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower=0&gt; indx_pos[n_pos]; // index of the non-NA values</span></span>
+<span id="cb103-6"><a href="sec-uss-fitting-with-stan.html#cb103-6" aria-hidden="true" tabindex="-1"></a><span class="st">  vector[n_pos] y;</span></span>
+<span id="cb103-7"><a href="sec-uss-fitting-with-stan.html#cb103-7" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb103-8"><a href="sec-uss-fitting-with-stan.html#cb103-8" aria-hidden="true" tabindex="-1"></a><span class="st">parameters {</span></span>
+<span id="cb103-9"><a href="sec-uss-fitting-with-stan.html#cb103-9" aria-hidden="true" tabindex="-1"></a><span class="st">  real x0;</span></span>
+<span id="cb103-10"><a href="sec-uss-fitting-with-stan.html#cb103-10" aria-hidden="true" tabindex="-1"></a><span class="st">  real u;</span></span>
+<span id="cb103-11"><a href="sec-uss-fitting-with-stan.html#cb103-11" aria-hidden="true" tabindex="-1"></a><span class="st">  vector[TT] pro_dev;</span></span>
+<span id="cb103-12"><a href="sec-uss-fitting-with-stan.html#cb103-12" aria-hidden="true" tabindex="-1"></a><span class="st">  real&lt;lower=0&gt; sd_q;</span></span>
+<span id="cb103-13"><a href="sec-uss-fitting-with-stan.html#cb103-13" aria-hidden="true" tabindex="-1"></a><span class="st">  real&lt;lower=0&gt; sd_r;</span></span>
+<span id="cb103-14"><a href="sec-uss-fitting-with-stan.html#cb103-14" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb103-15"><a href="sec-uss-fitting-with-stan.html#cb103-15" aria-hidden="true" tabindex="-1"></a><span class="st">transformed parameters {</span></span>
+<span id="cb103-16"><a href="sec-uss-fitting-with-stan.html#cb103-16" aria-hidden="true" tabindex="-1"></a><span class="st">  vector[TT] x;</span></span>
+<span id="cb103-17"><a href="sec-uss-fitting-with-stan.html#cb103-17" aria-hidden="true" tabindex="-1"></a><span class="st">  x[1] = x0 + u + pro_dev[1];</span></span>
+<span id="cb103-18"><a href="sec-uss-fitting-with-stan.html#cb103-18" aria-hidden="true" tabindex="-1"></a><span class="st">  for(i in 2:TT) {</span></span>
+<span id="cb103-19"><a href="sec-uss-fitting-with-stan.html#cb103-19" aria-hidden="true" tabindex="-1"></a><span class="st">    x[i] = x[i-1] + u + pro_dev[i];</span></span>
+<span id="cb103-20"><a href="sec-uss-fitting-with-stan.html#cb103-20" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb103-21"><a href="sec-uss-fitting-with-stan.html#cb103-21" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb103-22"><a href="sec-uss-fitting-with-stan.html#cb103-22" aria-hidden="true" tabindex="-1"></a><span class="st">model {</span></span>
+<span id="cb103-23"><a href="sec-uss-fitting-with-stan.html#cb103-23" aria-hidden="true" tabindex="-1"></a><span class="st">  x0 ~ normal(y[1],10);</span></span>
+<span id="cb103-24"><a href="sec-uss-fitting-with-stan.html#cb103-24" aria-hidden="true" tabindex="-1"></a><span class="st">  u ~ normal(0,2);</span></span>
+<span id="cb103-25"><a href="sec-uss-fitting-with-stan.html#cb103-25" aria-hidden="true" tabindex="-1"></a><span class="st">  sd_q ~ cauchy(0,5);</span></span>
+<span id="cb103-26"><a href="sec-uss-fitting-with-stan.html#cb103-26" aria-hidden="true" tabindex="-1"></a><span class="st">  sd_r ~ cauchy(0,5);</span></span>
+<span id="cb103-27"><a href="sec-uss-fitting-with-stan.html#cb103-27" aria-hidden="true" tabindex="-1"></a><span class="st">  pro_dev ~ normal(0, sd_q);</span></span>
+<span id="cb103-28"><a href="sec-uss-fitting-with-stan.html#cb103-28" aria-hidden="true" tabindex="-1"></a><span class="st">  for(i in 1:n_pos){</span></span>
+<span id="cb103-29"><a href="sec-uss-fitting-with-stan.html#cb103-29" aria-hidden="true" tabindex="-1"></a><span class="st">    y[i] ~ normal(x[indx_pos[i]], sd_r);</span></span>
+<span id="cb103-30"><a href="sec-uss-fitting-with-stan.html#cb103-30" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb103-31"><a href="sec-uss-fitting-with-stan.html#cb103-31" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb103-32"><a href="sec-uss-fitting-with-stan.html#cb103-32" aria-hidden="true" tabindex="-1"></a><span class="st">generated quantities {</span></span>
+<span id="cb103-33"><a href="sec-uss-fitting-with-stan.html#cb103-33" aria-hidden="true" tabindex="-1"></a><span class="st">  vector[n_pos] log_lik;</span></span>
+<span id="cb103-34"><a href="sec-uss-fitting-with-stan.html#cb103-34" aria-hidden="true" tabindex="-1"></a><span class="st">  for (i in 1:n_pos) log_lik[i] = normal_lpdf(y[i] | x[indx_pos[i]], sd_r);</span></span>
+<span id="cb103-35"><a href="sec-uss-fitting-with-stan.html#cb103-35" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb103-36"><a href="sec-uss-fitting-with-stan.html#cb103-36" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<p>Then we call <code>stan()</code> and pass in the data, names of parameter we wish to have returned, and information on number of chains, samples (iter), and thinning. The output is verbose (hidden here) and may have some warnings.</p>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="sec-uss-fitting-with-stan.html#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We pass in the non-NA ys as vector</span></span>
+<span id="cb104-2"><a href="sec-uss-fitting-with-stan.html#cb104-2" aria-hidden="true" tabindex="-1"></a>ypos <span class="ot">&lt;-</span> y[<span class="sc">!</span><span class="fu">is.na</span>(y)]</span>
+<span id="cb104-3"><a href="sec-uss-fitting-with-stan.html#cb104-3" aria-hidden="true" tabindex="-1"></a>n_pos <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(y))  <span class="co">#number on non-NA ys</span></span>
+<span id="cb104-4"><a href="sec-uss-fitting-with-stan.html#cb104-4" aria-hidden="true" tabindex="-1"></a>indx_pos <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="sc">!</span><span class="fu">is.na</span>(y))  <span class="co">#index on the non-NAs</span></span>
+<span id="cb104-5"><a href="sec-uss-fitting-with-stan.html#cb104-5" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> rstan<span class="sc">::</span><span class="fu">stan</span>(<span class="at">model_code =</span> scode, <span class="at">data =</span> <span class="fu">list</span>(<span class="at">y =</span> ypos,</span>
+<span id="cb104-6"><a href="sec-uss-fitting-with-stan.html#cb104-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">TT =</span> <span class="fu">length</span>(y), <span class="at">n_pos =</span> n_pos, <span class="at">indx_pos =</span> indx_pos), <span class="at">pars =</span> <span class="fu">c</span>(<span class="st">&quot;sd_q&quot;</span>,</span>
+<span id="cb104-7"><a href="sec-uss-fitting-with-stan.html#cb104-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;x&quot;</span>, <span class="st">&quot;sd_r&quot;</span>, <span class="st">&quot;u&quot;</span>, <span class="st">&quot;x0&quot;</span>), <span class="at">chains =</span> <span class="dv">3</span>, <span class="at">iter =</span> <span class="dv">1000</span>, <span class="at">thin =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p>We use <code>extract()</code> to extract the parameters from the fitted model. The estimated level is <code>x</code> and we will plot that with the 95% credible intervals.</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="sec-uss-fitting-with-stan.html#cb105-1" aria-hidden="true" tabindex="-1"></a>pars <span class="ot">&lt;-</span> rstan<span class="sc">::</span><span class="fu">extract</span>(mod)</span>
+<span id="cb105-2"><a href="sec-uss-fitting-with-stan.html#cb105-2" aria-hidden="true" tabindex="-1"></a>pred_mean <span class="ot">&lt;-</span> <span class="fu">apply</span>(pars<span class="sc">$</span>x, <span class="dv">2</span>, mean)</span>
+<span id="cb105-3"><a href="sec-uss-fitting-with-stan.html#cb105-3" aria-hidden="true" tabindex="-1"></a>pred_lo <span class="ot">&lt;-</span> <span class="fu">apply</span>(pars<span class="sc">$</span>x, <span class="dv">2</span>, quantile, <span class="fl">0.025</span>)</span>
+<span id="cb105-4"><a href="sec-uss-fitting-with-stan.html#cb105-4" aria-hidden="true" tabindex="-1"></a>pred_hi <span class="ot">&lt;-</span> <span class="fu">apply</span>(pars<span class="sc">$</span>x, <span class="dv">2</span>, quantile, <span class="fl">0.975</span>)</span></code></pre></div>
+<p>Here is a <code>ggplot()</code> version of the plot.</p>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="sec-uss-fitting-with-stan.html#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb106-2"><a href="sec-uss-fitting-with-stan.html#cb106-2" aria-hidden="true" tabindex="-1"></a>nile <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">y =</span> y, <span class="at">year =</span> <span class="dv">1871</span><span class="sc">:</span><span class="dv">1970</span>)</span>
+<span id="cb106-3"><a href="sec-uss-fitting-with-stan.html#cb106-3" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(nile, <span class="fu">aes</span>(year))</span>
+<span id="cb106-4"><a href="sec-uss-fitting-with-stan.html#cb106-4" aria-hidden="true" tabindex="-1"></a>h <span class="sc">+</span> <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> pred_lo, <span class="at">ymax =</span> pred_hi), <span class="at">fill =</span> <span class="st">&quot;grey70&quot;</span>) <span class="sc">+</span></span>
+<span id="cb106-5"><a href="sec-uss-fitting-with-stan.html#cb106-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> pred_mean), <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> y),</span>
+<span id="cb106-6"><a href="sec-uss-fitting-with-stan.html#cb106-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Nile River level&quot;</span>)</span></code></pre></div>
+<p><img src="figure/uss-stan-ar-level-ggplot-1.png" title="Estimated level and 95 percent credible intervals. Dots are the actual Nile River levels." alt="Estimated level and 95 percent credible intervals. Dots are the actual Nile River levels." width="80%" style="display: block; margin: auto;" /></p>
+<p>We can plot the histogram of the samples against the values estimated via maximum likelihood.</p>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="sec-uss-fitting-with-stan.html#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb107-2"><a href="sec-uss-fitting-with-stan.html#cb107-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(pars<span class="sc">$</span>x0)</span>
+<span id="cb107-3"><a href="sec-uss-fitting-with-stan.html#cb107-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">coef</span>(kem<span class="fl">.3</span>)<span class="sc">$</span>x0, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb107-4"><a href="sec-uss-fitting-with-stan.html#cb107-4" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(pars<span class="sc">$</span>u)</span>
+<span id="cb107-5"><a href="sec-uss-fitting-with-stan.html#cb107-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">coef</span>(kem<span class="fl">.3</span>)<span class="sc">$</span>U, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb107-6"><a href="sec-uss-fitting-with-stan.html#cb107-6" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log</span>(pars<span class="sc">$</span>sd_q<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb107-7"><a href="sec-uss-fitting-with-stan.html#cb107-7" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">log</span>(<span class="fu">coef</span>(kem<span class="fl">.3</span>)<span class="sc">$</span>Q), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb107-8"><a href="sec-uss-fitting-with-stan.html#cb107-8" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log</span>(pars<span class="sc">$</span>sd_r<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb107-9"><a href="sec-uss-fitting-with-stan.html#cb107-9" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">log</span>(<span class="fu">coef</span>(kem<span class="fl">.3</span>)<span class="sc">$</span>R), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="figure/uss-stan-hist-pars-1.png" title="Histogram of the parameter samples versus the estimate (red line) from maximum likelihood." alt="Histogram of the parameter samples versus the estimate (red line) from maximum likelihood." width="80%" style="display: block; margin: auto;" /></p>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="sec-uss-fitting-with-jags.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="sec-uss-a-simple-random-walk-model-of-animal-movement.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/atsa-es/MARMES/blob/master/rendered-chapters/chap02-uss.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["MARMES.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
