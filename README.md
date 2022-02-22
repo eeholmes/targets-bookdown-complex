@@ -1,4 +1,6 @@
-# MARSS for Env Sci BOOKDOWN Info {#top}
+# More complex example using {targets} and {bookdown} {#top}
+
+Fundamentally {targets} and {bookdown} don't play nice together since I cannot see any way to render but keep the figure legends and references. See targets-bookdown repo for more info.
 
 * [Installing bookdown](#installing-bookdown)
 * [Add a chapter](#add-a-chapter)
